@@ -7,6 +7,8 @@ import QuestionMcq from './pages/QuestionMcq';
 import Leaderboard from './pages/Leaderboard';
 import Result from './pages/Result';
 import OurTeam from './pages/OurTeam';
+import "./App.css"
+import Navbar from './components/Navbar';
 
 
 
@@ -14,7 +16,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
       <>
       <Route path="/" element={<Login />} />
-      <Route path="instruction" element={<Instruction/>} />
+      <Route path="instruction" element={<Instruction />} />
       <Route path="question" element={<QuestionMcq/>} />
       <Route path="leaderboard" element={<Leaderboard/>} />
       <Route path="result" element={<Result/>} />
@@ -31,7 +33,9 @@ function App({routes}) {
 
   return (
     <>
+    <Navbar/>
       <RouterProvider router={router}/>
+      {/* <Footer/> */}
     </>
   );
 }
