@@ -17,7 +17,7 @@ const router = createBrowserRouter(
     <UserContextProvider>
       <>
       <Route path="/" element={<Login />} />
-      <Route path="instruction" element={<Instruction/>} />
+      <Route path="instruction" element={<Instruction />} />
       <Route path="question" element={<QuestionMcq/>} />
       <Route path="leaderboard" element={<Leaderboard/>} />
       <Route path="result" element={<Result/>} />
