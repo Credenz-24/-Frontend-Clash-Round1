@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 // import { useForm, SubmitHandler } from "react-hook-form"
 import "./Login.css";
+import navigate from "UseNa"
 
 const Login = () => {
 
@@ -108,14 +109,18 @@ const Login = () => {
       teamname: userId,
       password: password,
     };
-  
-    axios.post('http://localhost:8000/api/login',loginData ,{ withCredentials: true })
+    
+    // axios.get('http://localhost:8000/api/logout' ,{ headers: {"Authorization":localStorage.getItem('jwt')}})
+    axios.post('http://localhost:8000/api/login',loginData)
       .then((res) => {
         console.log(res);
-        // Assuming the token is in res.data.token
-        // Set a cookie that expires in 1 hour
-        // Redirect or update UI as necessary
-      })
+        
+        localStorage.setItem('jwt', res.data.jwt);
+        // console.log(res.data.jwt);
+
+        // const jwt = localStorage.getItem('jwt');
+        // console.log(jwt); // Log the retrieved JWT
+  })
       .catch((err) => console.log(err.response ? err.response.data.detail : err.message));
   };
   
@@ -239,9 +244,8 @@ const Login = () => {
                 </label>
               </div>
             </div>
-
           </div>
-          </div>
+        </div>
 
           {/* <div className="flex justify-center xl:pt-12  pt-0"> */}
           <div className="relative">            
