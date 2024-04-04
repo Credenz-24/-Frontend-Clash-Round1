@@ -117,7 +117,7 @@ const Login = () => {
         
         localStorage.setItem('jwt', res.data.jwt);
         // console.log(res.data.jwt);
-
+        navigate()
         // const jwt = localStorage.getItem('jwt');
         // console.log(jwt); // Log the retrieved JWT
   })
