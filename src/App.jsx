@@ -7,11 +7,14 @@ import QuestionMcq from './pages/QuestionMcq';
 import Leaderboard from './pages/Leaderboard';
 import Result from './pages/Result';
 import OurTeam from './pages/OurTeam';
+import Navbar from "./components/Navbar"
+import UserContextProvider from '../context/UserContextProvider';
 
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+    <UserContextProvider>
       <>
       <Route path="/" element={<Login />} />
       <Route path="instruction" element={<Instruction/>} />
@@ -20,9 +23,8 @@ const router = createBrowserRouter(
       <Route path="result" element={<Result/>} />
       <Route path="Ourteam" element={<OurTeam/>} />
 
-      
       </>
-     
+      </UserContextProvider>
   
   )
 )
@@ -31,7 +33,10 @@ function App({routes}) {
 
   return (
     <>
+      <div className='bg-slate-900'>
+      <Navbar></Navbar>
       <RouterProvider router={router}/>
+      </div>
     </>
   );
 }
