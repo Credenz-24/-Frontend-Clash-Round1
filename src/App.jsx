@@ -14,7 +14,6 @@ import UserContextProvider from '../context/UserContextProvider';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <UserContextProvider>
       <>
       <Route path="/" element={<Login />} />
       <Route path="instruction" element={<Instruction />} />
@@ -24,7 +23,6 @@ const router = createBrowserRouter(
       <Route path="Ourteam" element={<OurTeam/>} />
 
       </>
-      </UserContextProvider>
   
   )
 )
@@ -32,12 +30,14 @@ const router = createBrowserRouter(
 function App({routes}) {
 
   return (
+    <UserContextProvider>
     <>
       <div className='bg-slate-900'>
       <Navbar></Navbar>
       <RouterProvider router={router}/>
       </div>
     </>
+    </UserContextProvider>
   );
 }
 

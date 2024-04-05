@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 // import { useForm, SubmitHandler } from "react-hook-form"
 import "./Login.css";
-import navigate from "UseNa"
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
+  const navigate = useNavigate();
   const [showLabelUser, setShowLabelUser] = useState(false);
   const [showLabelPass, setShowLabelPass] = useState(false);
   const handleInputFocus1 = () => {
@@ -106,18 +106,18 @@ const Login = () => {
     console.log({ userId, password });
   
     const loginData = {
-      teamname: userId,
+      username: userId,
       password: password,
     };
     
     // axios.get('http://localhost:8000/api/logout' ,{ headers: {"Authorization":localStorage.getItem('jwt')}})
-    axios.post('http://localhost:8000/api/login',loginData)
+    axios.post('http://localhost:8000/core/login/',loginData)
       .then((res) => {
         console.log(res);
         
-        localStorage.setItem('jwt', res.data.jwt);
+        localStorage.setItem('token', res.data.token);
         // console.log(res.data.jwt);
-        navigate()
+        // navigate()
         // const jwt = localStorage.getItem('jwt');
         // console.log(jwt); // Log the retrieved JWT
   })
