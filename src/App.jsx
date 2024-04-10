@@ -5,10 +5,11 @@ import Login from './pages/Login';
 import Instruction from './pages/Instruction';
 import QuestionMcq from './pages/QuestionMcq';
 import Leaderboard from './pages/Leaderboard';
-import Result from './pages/Result';
+import Result from './pages/ResultPg/component/Result'
 import OurTeam from './pages/OurTeam';
 import Navbar from "./components/Navbar"
 import UserContextProvider from '../context/UserContextProvider';
+import PrivateRoute from './components/PrivateRoute'
 
 
 
@@ -17,8 +18,14 @@ const router = createBrowserRouter(
       <>
       <Route path="/" element={<Login />} />
       <Route path="instruction" element={<Instruction />} />
-      <Route path="question" element={<QuestionMcq/>} />
       <Route path="leaderboard" element={<Leaderboard/>} />
+      {/* <Route element={<PrivateRoute />} >
+        <Route path="question" element={<QuestionMcq/>} />
+        <Route path="result" element={<Result/>} />
+        <Route path="Ourteam" element={<OurTeam/>} />
+      </Route> */}
+
+      <Route path="question" element={<QuestionMcq/>} />
       <Route path="result" element={<Result/>} />
       <Route path="Ourteam" element={<OurTeam/>} />
 

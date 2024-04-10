@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Instruction = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [acceptedConditions, setAcceptedConditions] = useState(false);
 
+  const navigate = useNavigate();
     const InstructionArray = [
     {
       title: "INSTRUCTION 1",
@@ -84,6 +86,7 @@ const Instruction = () => {
   const handleProceedClick = () => {
     if (acceptedConditions) {
       console.log("Proceeding...");
+      navigate("/Question")
     } else {
       console.log("Please accept the conditions.");
     }

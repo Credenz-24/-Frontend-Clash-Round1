@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import axios from 'axios';
 // import { useForm, SubmitHandler } from "react-hook-form"
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import UserContext from '../../context/UserContext'
+
 
 const Login = () => {
   const navigate = useNavigate();
   const [showLabelUser, setShowLabelUser] = useState(false);
   const [showLabelPass, setShowLabelPass] = useState(false);
+  const {setUser} = useContext(UserContext);
   const handleInputFocus1 = () => {
     //setShowUnderline(true); // Show the underline when input is focused
     setShowLabelUser(true);
@@ -113,13 +116,15 @@ const Login = () => {
     // axios.get('http://localhost:8000/api/logout' ,{ headers: {"Authorization":localStorage.getItem('jwt')}})
     axios.post('http://localhost:8000/core/login/',loginData)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.token);
         
         localStorage.setItem('token', res.data.token);
-        // console.log(res.data.jwt);
-        // navigate()
-        // const jwt = localStorage.getItem('jwt');
-        // console.log(jwt); // Log the retrieved JWT
+        console.log(res.data.jwt);
+        
+        const jwt = localStorage.getItem('token');
+        console.log(jwt); // Log the retrieved JWT
+        navigate("Instruction")
+        setUser(loginData);
   })
       .catch((err) => console.log(err.response ? err.response.data.detail : err.message));
   };
