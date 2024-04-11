@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {AiOutlineClose,AiOutlineMenu} from 'react-icons/ai';
 
-
 function Navbar() {
 
     const [nav,setNav] = useState(true);
@@ -18,7 +17,7 @@ function Navbar() {
         </div>
         <div className="nav-right text-[17px] font-semibold justify-center items-center gap-[20px] hidden md:flex">
             <a href="#" className='px-[20px] py-[10px] text-center'>Home</a>
-            <a href="#" className='px-[20px] py-[10px] text-center'>Leaderboards</a>
+            <a href="/leaderboard" className='px-[20px] py-[10px] text-center'>Leaderboards</a>
             <a href="#" className='px-[20px] py-[10px] text-center'>Instructions</a>
             <a href="#" className='px-[20px] py-[10px] text-center'>Logout</a>
 

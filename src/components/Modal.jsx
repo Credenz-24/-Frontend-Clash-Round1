@@ -43,7 +43,7 @@ export default function Modal({lifelineIns, type, onClose, onSkipQuestion, onGPT
                 </button>
               </div>
               <div
-                className="text-white relative p-6 flex-auto h-[59vh] w-[60vw] max-h-[59vh] border-2 border-white m-6 resize-none overflow-y-scroll bg-slate-800"
+                className="text-white relative p-6 flex-auto h-[29vh] w-[50vw] max-h-[59vh] border-2 border-white m-6 resize-none overflow-y-scroll bg-slate-800"
                 readOnly
                 style={{
                   scrollbarColor: "gray black",
