@@ -25,35 +25,8 @@ const Instruction = () => {
               </p>
             </div>
           </div>
-          <div className="list-decimal mb-4 bg-cyan-400 rounded-xl bg-opacity-50  rounded-custom shadow-custom p-4 flex h-[150px] w-[60vw]">
-            <div className="number w-[10%] h-full bg-red-00 flex justify-center items-center">
-              <button className="rounded-full bg-blue-200 w-[5vw] h-[5vw] font-bold text-xl text-black">
-                  2
-              </button>
-            </div>
-            <div className="para w-[90%] bg-green-00 flex justify-center items-center text-justify">
-              <p className="mb-2">
-                A 28 minute round of MCQs for individuals as well as a team (max
-                2 people) contenders based on coding concepts in C/C++, Java, and
-                Python, divided into Juniors and Seniors category.
-              </p>
-            </div>
-          </div>
-          <div className="list-decimal mb-4 bg-cyan-400 rounded-xl bg-opacity-50  rounded-custom shadow-custom p-4 flex h-[150px] w-[60vw]">
-            <div className="number w-[10%] h-full bg-red-00 flex justify-center items-center">
-              <button className="rounded-full bg-blue-200 w-[5vw] h-[5vw] font-bold text-xl text-black">
-                  3
-              </button>
-            </div>
-            <div className="para w-[90%] bg-green-00 flex justify-center items-center text-justify px-[2vw] ">
-              <p className="">
-                A 28 minute round of MCQs for individuals as well as a team (max
-                2 people) contenders based on coding concepts in C/C++, Java, and
-                Python, divided into Juniors and Seniors category.
-              </p>
-            </div>
-          </div>
           
+           
         </div>
       ),
     },
@@ -94,8 +67,8 @@ const Instruction = () => {
 
   return (
     <>
-      <div className="bg-black flex justify-center items-center h-[88.4vh] w-[100%] relative overflow-y-hidden">
-        <div className="container flex align-middle justify-center relative mb-10">
+      <div className="bg-red-500 flex justify-center items-center h-[86.4vh] w-[100%] relative overflow-y-hidden">
+        <div className="container flex justify-center relative bg-green-600 ">
           <div className="shape relative overflow-hidden z-10 bg-gradient-to-br from-[#050048] to-[#050048] rounded-lg h-[80vh] w-[80vw] sm:h-[70vh] sm:w-[90vw] md:h-[80vh] md:w-[90vw] lg:h-[82vh] lg:w[90vw] xl:h-[78vh]">
             <div className="p-4 sm:p-4 md:p-8 lg:p-16 h-full">
               <div className=" flex align-middle justify-center flex-col relative h-[78%] sm:h-[78%] md:h-[84%] lg:h-[84%] items-center ">

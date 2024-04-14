@@ -11,12 +11,12 @@ function Navbar() {
     }
     
   return (
-    <div className='navbar h-24 w-full px-[5vw] text-white flex justify-between items-center bg-gradient-to-b from-[#04003D] to-black  '>
+    <div className='navbar h-24 w-full px-[5vw] text-white flex justify-between items-center bg-transparent '>
 
-        <div className="nav-left">
-            <h1 className='text-[30px] font-bold'>LOGO.</h1>
+        <div className="nav-left flex justify-center items-center">
+            <img src="../clash.png" alt="" className='h-[120px] w-[120px]'/>
         </div>
-        <div className="nav-right text-[17px] font-semibold justify-center items-center gap-[20px] hidden md:flex">
+        <div className="nav-right text-[17px] font-normal justify-center items-center gap-[20px] hidden md:flex">
             <a href="#" className='px-[20px] py-[10px] text-center'>Home</a>
             <a href="#" className='px-[20px] py-[10px] text-center'>Leaderboards</a>
             <a href="#" className='px-[20px] py-[10px] text-center'>Instructions</a>

@@ -4,12 +4,13 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import Login from './pages/Login';
 import Instruction from './pages/Instruction';
 import QuestionMcq from './pages/QuestionMcq';
-import Leaderboard from './pages/Leaderboard';
+import LeaderboardMain from './pages/leaderboard/LeaderboardMain';
 import Result from './pages/ResultPg/component/Result'
 import OurTeam from './pages/OurTeam';
 import Navbar from "./components/Navbar"
 import UserContextProvider from '../context/UserContextProvider';
 import PrivateRoute from './components/PrivateRoute'
+import InstructionMain from './pages/InstrcutionPage/InstructionMain';
 
 
 
@@ -17,14 +18,13 @@ const router = createBrowserRouter(
   createRoutesFromElements(
       <>
       <Route path="/" element={<Login />} />
-      <Route path="instruction" element={<Instruction />} />
-      <Route path="leaderboard" element={<Leaderboard/>} />
+      <Route path="instruction" element={<InstructionMain />} />
+      <Route path="leaderboard" element={<LeaderboardMain/>} />
       {/* <Route element={<PrivateRoute />} >
         <Route path="question" element={<QuestionMcq/>} />
         <Route path="result" element={<Result/>} />
         <Route path="Ourteam" element={<OurTeam/>} />
       </Route> */}
-
       <Route path="question" element={<QuestionMcq/>} />
       <Route path="result" element={<Result/>} />
       <Route path="Ourteam" element={<OurTeam/>} />
@@ -35,13 +35,25 @@ const router = createBrowserRouter(
 )
 
 function App({routes}) {
+  let path = router;
+  const login = () => path==="/";
 
   return (
     <UserContextProvider>
     <>
-      <div className='bg-slate-900'>
-      <Navbar></Navbar>
-      <RouterProvider router={router}/>
+      <div className='main '>
+      {/* <Navbar></Navbar>
+      <RouterProvider router={router}/> */}
+      {router==<Login/> ? (
+          <>
+            <RouterProvider router={router}/>
+          </>
+      ):(
+        <>
+        <Navbar></Navbar>
+        <RouterProvider router={router}/>
+        </>
+      )}
       </div>
     </>
     </UserContextProvider>

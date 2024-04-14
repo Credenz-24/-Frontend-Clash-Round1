@@ -26,8 +26,8 @@ function Leaderboard() {
     }, []);
 
     return (
-      <div>
-        <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+      <div className=''>
+        <div className="max-w-lg mx-auto bg-red-500 shadow-md rounded-lg overflow-hidden">
           <h2 className="text-2xl font-bold text-center text-gray-800 bg-gray-100 p-4">Junior Leaderboard</h2>
           <ul className="divide-y divide-gray-300">
               {juniorLeaderboard.map((entry, index) => (
