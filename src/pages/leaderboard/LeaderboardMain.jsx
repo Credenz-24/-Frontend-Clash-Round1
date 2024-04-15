@@ -26,25 +26,24 @@ function Leaderboard() {
         fetchData();
     }, []);
 
+
+
     console.log("Here :",juniorLeaderboard);
 
     return (
       <>
         <div className="container h-[86.4vh] w-[100%] bg-red-60 flex flex-col justify-center items-center">
             <div className="top-3-juniors h-[45%] w-full bg-purple-40 flex justify-center items-center gap-[6vw] ">
-                {
-                    
-                    <>
-                        <TopCards/>
-                        <TopCards/>
-                        <TopCards/>
-                    </>
-                }
-
+            {
+                juniorLeaderboard.filter((items, index) => index < 3)
+                    .map((item) => (
+                        <TopCards key={item.username} name={item.username} rank={item.index+1}  />
+                    ))
+            }
             </div>
-            <div className="juniors-table h-[55%] w-full flex justify-center items-center bg-green-400">
-                <div className=" junior h-[300px] w-[700px] mx-auto bg-red-800 shadow-md rounded-lg overflow-hidden">
-                <h2 className="text-2xl font-bold text-center text-gray-800 bg-gray-100 p-4">Junior Leaderboard</h2>
+            <div className="juniors-table h-[55%] w-full flex justify-center items-center bg-green-400 ">
+                <div className=" junior h-[300px] w-[700px] mx-auto bg-red-800 shadow-md rounded-lg overflow-y-scroll">
+                <h2 className="text-2xl sticky top-0 font-bold text-center text-gray-800 bg-gray-100 p-4">Junior Leaderboard</h2>
                 <ul className="divide-y divide-gray-300">
                     {juniorLeaderboard.map((entry, index) => (
                         <li key={index} className="flex justify-between items-center p-4 hover:bg-gray-50">
