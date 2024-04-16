@@ -16,9 +16,9 @@ function Navbar() {
             <img src="../clash.png" alt="" className='h-[120px] w-[120px]'/>
         </div>
         <div className="nav-right text-[17px] font-normal justify-center items-center gap-[20px] hidden md:flex">
-            <a href="#" className='px-[20px] py-[10px] text-center'>Home</a>
+            <a href="/" className='px-[20px] py-[10px] text-center'>Home</a>
             <a href="/leaderboard" className='px-[20px] py-[10px] text-center'>Leaderboards</a>
-            <a href="#" className='px-[20px] py-[10px] text-center'>Instructions</a>
+            <a href="/instructions" className='px-[20px] py-[10px] text-center'>Instructions</a>
             <a href="#" className='px-[20px] py-[10px] text-center'>Logout</a>
 
         </div>

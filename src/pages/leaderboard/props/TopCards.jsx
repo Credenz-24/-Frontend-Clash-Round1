@@ -1,10 +1,10 @@
 const TopCards = ({name, rank, teamScore}) => {
     return ( 
         <>
-            <div className="card h-[230px] w-[400px] bg-blue-00 border-[2px] border-solid border-white rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px] ">
+            <div className="card h-[200px] w-[350px] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px] ">
                 <div className="user h-[50%] w-full bg-yellow-30 flex justify-center items-center ">
                     <div className="trophy-image w-[30%] h-full bg-red- flex justify-center items-center">
-                        <img src="../fire.png" alt="" className="h-[80px] w-[80px]" />
+                        <img src="../fire.png" alt="" className="h-[60px] w-[60px]" />
                         {/* <h1 className="text-[25px] text-white"></h1> */}
                     </div>
                     <div className="username w-[70%] h-full bg-red-70 flex justify-start items-center px-[20px]">
