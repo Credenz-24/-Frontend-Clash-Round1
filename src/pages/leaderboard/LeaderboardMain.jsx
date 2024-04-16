@@ -54,8 +54,8 @@ function Leaderboard() {
 
     return (
       <>
-        <div className="container h-[105vh] w-[100%] bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
-            <div className="top-3-juniors h-[40%] w-full bg-purple-40 flex justify-center items-center gap-[6vw] ">
+        <div className="container h-[86.4vh] w-[100%] bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
+            <div className="top-3-juniors h-[30%] w-full bg-purple-40 flex justify-center items-center gap-[6vw] ">
             {
                 juniorLeaderboard.filter((items, index) => (index < 3))
                     .map((item) => (
@@ -63,13 +63,13 @@ function Leaderboard() {
                     ))
             }
             </div>
-            <div className="current-rank h-[10%] w-full bg-green-0 flex justify-center items-center">
+            {/* <div className="current-rank h-[10%] w-full bg-green-0 flex justify-center items-center">
                 <div className="box h-full w-[700px] bg-[#09112c] border-blue-500 border-2 border-solid rounded-[5px] flex justify-between items-center px-[4vw] ">
                     <h1 className='text-white text-[30px]'>Your rank</h1>
                     <h1 className='text-white text-[30px]'>{per.team_rank}</h1>
                 </div>
-            </div>
-            <div className="juniors-table h-[50%] w-full flex justify-center items-center bg-green-40 ">
+            </div> */}
+            <div className="juniors-table h-[60%] w-full flex justify-center items-center bg-green-40 ">
                 <div className=" junior h-[300px] w-[700px] mx-auto bg-red-80 shadow-md rounded-lg overflow-y-scroll no-scrollbar border-[2px] border-solid border-blue-500">
                 <h2 className="text-2xl sticky top-0 font-bold text-center text-white bg-[#09112c] p-4 border-b-[2px] border-solid border-blue-500">Junior Leaderboard</h2>
                 <ul className="divide-y divide-blue-900">
