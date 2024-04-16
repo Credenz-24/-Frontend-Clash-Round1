@@ -54,10 +54,6 @@ const InstructionMain = (props) => {
     const [status,setStatus]=useState([]);
     const id = 101;
 
-    // const text = props.text; 
-    
-    
-
 
     const handlePopup = () => {
         setPop(prevPop => !prevPop); // Toggle the previous value of pop
@@ -115,11 +111,7 @@ const InstructionMain = (props) => {
                                 );
                             })}
                             </div>
-                            <div className="buttons h-[8%] w-full bg-orange- flex justify-center items-center gap-[50px]">
-                                <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handleNext}>
-                                    Next
-                                </button>
-                            </div>
+                            
                             
                         </>
                     ):(null)}
