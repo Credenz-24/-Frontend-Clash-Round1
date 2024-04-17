@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ function Navbar() {
         setUser(null);
         localStorage.removeItem('token');
         navigate('/');
+        toast.info("Logged Out!")
       })
       .catch((err) =>
         console.log(err.response ? err.response.data.detail : err.message)

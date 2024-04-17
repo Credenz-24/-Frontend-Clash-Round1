@@ -86,25 +86,33 @@ const Login = () => {
       username: userId,
       password: password,
     };
-    
-    // axios.get('http://localhost:8000/api/logout' ,{ headers: {"Authorization":localStorage.getItem('jwt')}})
-    axios.post('http://localhost:8000/core/login/',loginData)
+  
+    // Display loading toast
+    const loadingToastId = toast.loading("Logging in...");
+  
+    axios.post('http://localhost:8000/core/login/', loginData)
       .then((res) => {
         console.log(res.data.token);
-        
+  
         localStorage.setItem('token', res.data.token);
         console.log(res.data.jwt);
-        
+  
         const jwt = localStorage.getItem('token');
         console.log(jwt); // Log the retrieved JWT
-        navigate("/instruction")
-        toast("Logged In SuccessFully !");
-        setUser(loginData);
-  })
-      .catch((err) => console.log(err.response ? err.response.data.detail : err.message));
-  };
+        navigate("/instruction");
   
-
+        // Dismiss loading toast once login is completed
+        toast.dismiss(loadingToastId);
+  
+        toast.success("Logged In Successfully!");
+        setUser(loginData);
+      })
+      .catch((err) => {
+        console.log(err.response ? err.response.data.detail : err.message);
+        // Dismiss loading toast if login fails
+        toast.dismiss(loadingToastId);
+      });
+  };
 
   return (
     
@@ -113,7 +121,7 @@ const Login = () => {
     <div
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
     className="h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
-    style={{backgroundImage: `url('../Background 1.jpeg')`, backgroundSize: 'cover'}}    
+    style={{backgroundImage: `url('../Background 2.jpeg')`, backgroundSize: 'cover'}}    
     // onClick={createRipple}
     >
       {/* <video
@@ -129,7 +137,7 @@ const Login = () => {
         
         <img src="../Credenz_logo.png" alt=""  className="h-[60px] w-[60px] absolute top-[4%] left-[3%]" />
         <h1 className="text-[20px] text-white font-bold absolute top-[6.3%] left-[6.7%]">Credenz</h1>
-        <img src="../clash.png" alt=""  className="h-[400px] w-[400px]" />
+        <img src="../clash.png" alt=""  className="h-80 w-80" />
 
 
         
@@ -237,7 +245,7 @@ const Login = () => {
                 onClick={handleLogin}
                 type="button"
                 
-                className="lg:mt-6 wavy-btn xl:mt-0 text-white font-medium rounded-lg text-xl py-[10px] px-[30px] dark:bg-blue-600 dark:hover:bg-blue-800 focus:outline-none dark:focus:ring-blue-800"
+                className="lg:mt-6 wavy-btn xl:mt-0 border border-blue-400 text-white font-medium rounded-lg text-xl py-[10px] px-[30px] dark:bg-blue-600 dark:hover:bg-blue-800 focus:outline-none dark:focus:ring-blue-800"
 
               >
                 Login

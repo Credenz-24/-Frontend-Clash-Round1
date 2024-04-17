@@ -11,7 +11,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <UserContextProvider>
     <App />
-    <ToastContainer />
+    <ToastContainer
+position="top-right"
+autoClose={3500}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+transition: Bounce
+/>
     </UserContextProvider>
     </BrowserRouter>
 

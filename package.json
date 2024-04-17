@@ -19,7 +19,7 @@
     "@mui/material": "^5.15.15",
     "@mui/x-charts": "^7.1.1",
     "axios": "^1.6.8",
-    "flowbite-react": "^0.7.3",
+    "flowbite-react": "^0.7.8",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.3",
     "react": "^18.2.0",

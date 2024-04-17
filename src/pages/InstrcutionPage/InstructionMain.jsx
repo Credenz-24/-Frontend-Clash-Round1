@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Instruct from "./props/Instruct";
 import LifeLine from "./props/LifeLine";
 import Popup from "./props/Popup";
+import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 
 
@@ -43,10 +44,11 @@ const InstructionMain = (props) => {
 
     const handleProceedClick = () => {
         if (acceptedConditions) {
-          console.log("Proceeding...");
+            const loadingToastId =  toast.loading("Proceeding...");
           navigate("/question")
+          toast.dismiss(loadingToastId);
         } else {
-          console.log("Please accept the conditions.");
+          toast.warning("Please accept the conditions.");
         }
       };
 
