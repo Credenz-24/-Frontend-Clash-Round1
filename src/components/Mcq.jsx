@@ -44,6 +44,66 @@ export default function Questions() {
   const [min, setMin] = useState(0);
 
   const navigate = useNavigate();
+  const apiUrl = 'http://127.0.0.1:8000/core/tab_switch/';
+
+  //Tab_Switching 
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+
+  const handleEvent = async (eventType) => {
+      try {
+          const token = localStorage.getItem('token');
+          const response = await axios.post(apiUrl, {
+              bool: eventType === 'tabSwitch'
+          }, {
+              headers: {
+                  Authorization: `${token}`,
+              }
+          });
+          if (response.status === 200) {
+              const { message, count } = response.data;
+              console.log('API response:', message, count);
+              setTabSwitchCount(count);
+              if (count > 3) {
+                navigate("/result")
+                toast.error('Your test has been auto-submitted due to excessive tab switching.');
+            }
+              else if (count > 0) {
+                  toast.warning(`Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`);
+              }
+          } else if (response.status === 307) {
+              const { message } = response.data;
+              if (message === 'time over') {
+                  toast.error('Time is over. Your test has been submitted.');
+              } else if (message === 'submitted') {
+                  toast.error('Your test has been auto-submitted due to excessive tab switching.');
+              }
+          }
+      } catch (error) {
+          console.error('Error handling event:', error);
+          handleSubmit()
+          toast.error('An error occurred. Please try again.');
+      }
+  };
+  useEffect(() => {
+      const handleFullscreenChange = () => {
+          if (!document.fullscreenElement) {
+              handleEvent('fullscreenExit');
+          }
+      };
+      document.addEventListener('fullscreenchange', handleFullscreenChange);
+      const handleVisibilityChange = () => {
+          if (document.visibilityState === 'hidden') {
+              handleEvent('tabSwitch');
+          }
+      };
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      return () => {
+          document.removeEventListener('fullscreenchange', handleFullscreenChange);
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
+  }, []);
+
+
 
   const handleOptionSelect = (option) => {
     setSelectedOption((prevOption) => (prevOption === option ? "" : option));
@@ -158,12 +218,19 @@ export default function Questions() {
 
   //Submit a question to submit/
   const handleSubmit = () => {
+    if(selectedOption === ""){
+      toast.error("Choose an Option!");
+      return;
+    }
     const selectedOptionData = { selected: selectedOption };
+
+    // const loadingToastId = toast.loading("Loading Next Questions!");
     axios
       .post("http://127.0.0.1:8000/core/submit/", selectedOptionData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((res) => {
+        // toast.dismiss(loadingToastId);
         fetchQuestion();
         fetchLifelines();
         setSelectedOption("");
@@ -177,9 +244,12 @@ export default function Questions() {
       .catch((error) => {
         console.log("res handlesubmit:", error.response.status,typeof(error.response.status));
         if(error.response.status === 307 || error.response.status === 500){
+          // toast.dismiss(loadingToastId);
           navigate('/result');
+          toast.info("Round Ended!")
         }
         console.error("Error submitting option:", error);
+        toast.error(error);
       });
   };
 
@@ -195,6 +265,7 @@ export default function Questions() {
           console.log("Question skipped successfully");
           console.log(response.data);
           setMyData(response.data);
+          toast.success("Question skipped successfully");
           fetchQuestion();
           fetchLifelines();
           setAudiencePollVisible(false);
@@ -206,9 +277,11 @@ export default function Questions() {
         })
         .catch((error) => {
           console.error("Error skipping question:", error);
+          toast.dismiss(loadingToastId);
         });
     } catch (error) {
       console.error("Error skipping question:", error);
+      toast.dismiss(loadingToastId);
     }
   };
 
@@ -270,6 +343,7 @@ export default function Questions() {
   //Use streak lifeline from /streak_lifeline
   const handleStreakLifeline = async () => {
     // setShowModal(true);
+    const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
         .get("http://127.0.0.1:8000/core/streak_lifeline/", {
@@ -280,6 +354,7 @@ export default function Questions() {
           console.log(response.data);
           setHandleStreak(true);
           setStreakLifelineData(response.data);
+          toast.dismiss(loadingToastId);
           setShowStreakLifelinedata(true);
           setAudiencePollVisible(false);
           setShowStreakModal(true);
@@ -288,15 +363,18 @@ export default function Questions() {
         })
         .catch((error) => {
           console.error("Error streak lifeline", error);
+          toast.dismiss(loadingToastId);
         });
     } catch (error) {
       console.error("Error streak lifeline", error);
+      toast.dismiss(loadingToastId);
     }
   };
 
   //use AudiencePoll from audiance_poll/
   const handleAudiencePoll = async () => {
     setShowModal(true);
+    const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
         .get("http://127.0.0.1:8000/core/audiance_poll/", {
@@ -307,15 +385,18 @@ export default function Questions() {
           console.log(response.data);
           setAudiencePollData(response.data.correct_answer_percentages);
           setAudiencePollVisible(true);
+          toast.dismiss(loadingToastId);
           setBotResponse("");
           setFetchLifeline((prevState) => ({ ...prevState, audiance: false }));
           fetchLifelines();
         })
         .catch((error) => {
           console.error("Error skipping question:", error);
+          toast.dismiss(loadingToastId);
         });
     } catch (error) {
       console.error("Error skipping question:", error);
+      toast.dismiss(loadingToastId);
     }
   };
 
@@ -342,18 +423,20 @@ export default function Questions() {
   return (
     <>
       <div className="mt-12 ">
-      <div className="text-white">Timer: {formatTime(timer)} minutes</div>
+      <div className="text-white bg-green- flex flex-row relative"><span className="border border-[#0075FF] rounded-lg p-4 mb-2">Timer: {formatTime(timer)} minutes</span></div>
         {myData.question_data && (
           <div className="h-[40vh] w-[50vw] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
-            <div className="text-xl font-bold overflow-y-auto text-slate-100 ">
-              <span className="font-bold text-xl "></span>
-              <pre readOnly
-                style={{
-                  whiteSpace: 'pre-wrap',
-                  scrollbarColor: "gray black",
-                  WebkitScrollbar: { width: "10px", backgroundColor: "black" },
-                  scrollbarWidth: "thin"
-                }}>
+            <div className="text-xl font-bold overflow-y-auto text-slate-100 w-full scrollbar-thin scrollbar-webkit">
+              <span className="font-bold text-xl"></span>
+              <pre
+              className=""
+                // style={{
+                //   whiteSpace: 'pre-wrap',
+                //   scrollbarColor: "gray black",
+                //   WebkitScrollbar: { width: "10px", backgroundColor: "black" },
+                //   scrollbarWidth: "thin"
+                // }}
+                >
                   {myData.question_data.question_md}
               </pre>
               
@@ -371,7 +454,7 @@ export default function Questions() {
                 }`}
                 onClick={() => handleOptionSelect("a")}
               >
-                <span className="inline-flex items-center justify-center w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
+                <span className="inline-flex items-center justify-center min-w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
                   A
                 </span>
                 <span className="ml-2">{myData.question_data.a}</span>
@@ -384,7 +467,7 @@ export default function Questions() {
                 }`}
                 onClick={() => handleOptionSelect("b")}
               >
-                <span className="inline-flex items-center justify-center w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
+                <span className="inline-flex items-center justify-center min-w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
                   B
                 </span>
                 <span className="ml-2">{myData.question_data.b}</span>
@@ -397,7 +480,7 @@ export default function Questions() {
                 }`}
                 onClick={() => handleOptionSelect("c")}
               >
-                <span className="inline-flex items-center justify-center w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
+                <span className="inline-flex items-center justify-center min-w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
                   C
                 </span>
                 <span className="ml-2">{myData.question_data.c}</span>
@@ -410,7 +493,7 @@ export default function Questions() {
                 }`}
                 onClick={() => handleOptionSelect("d")}
               >
-                <span className="inline-flex items-center justify-center w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
+                <span className="inline-flex items-center justify-center min-w-8 h-8 text-xs font-semibold border-blue-400 border-2 text-center rounded-lg mr-2">
                   D
                 </span>
                 <span className="ml-2">{myData.question_data.d}</span>
@@ -422,13 +505,14 @@ export default function Questions() {
         <div className="align-middle justify-center relative flex mt-12">
           <button
             type="button"
-            disabled={!selectedOption}
+            // disabled={!selectedOption}
             //className="py-2.5 px-5 me-2 mb-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
              className="text-black font-bold uppercase transition-all duration-[0.3s] relative overflow-hidden z-[1] px-5 py-3 rounded-[10rem] after:content-[''] after:absolute after:w-full after:h-full after:bg-[#0075FF] after:z-[-2] after:rounded-[10rem] after:left-0 after:bottom-0 before:content-[''] before:absolute before:w-[0%] before:h-full before:bg-[#08a] before:transition-all before:duration-[0.3s] before:z-[-1] before:rounded-[10rem] before:left-0 before:bottom-0 hover:text-white hover:before:w-full mx-2"
             onClick={handleSubmit}
           >
             NEXT
           </button>
+          {/* {selectedOption === "" && toast.error("Choose A Option!")} */}
         </div>
       </div>
 
@@ -476,10 +560,10 @@ export default function Questions() {
             {/* {console.log("skip" ,fetchLifeline?.available?.skip)} */}
             <button
               disabled={!fetchLifeline?.available?.skip}
-              className={`flex items-center justify-center h-10 mt-2 w-[100%] text-center overflow-hidden ${
+              className={`flex items-center justify-center rounded-lg h-10 mt-2 w-[100%] text-center overflow-hidden ${
                 !fetchLifeline?.available?.skip
-                ? "bg-[#0075FF] text-white cursor-not-allowed"
-                : "text-white border border-[#0075FF] rounded-lg"
+                ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
               onClick={() =>{
                 openModal({ type: "skip", lifelineIns: "The Skip Lifeline grants the player the option to bypass the current question without providing an answer.Upon activation, the current question will be substituted with a new one" })
@@ -495,10 +579,10 @@ export default function Questions() {
 
               <button
               disabled={!fetchLifeline?.available?.audience ^ fetchLifeline?.in_use?.audience }
-              className={`flex items-center justify-center h-10 mt-2 w-full text-center overflow-hidden ${
+              className={`flex items-center justify-center rounded-lg h-10 mt-2 w-full text-center overflow-hidden ${
                 !fetchLifeline?.available?.audience ^ fetchLifeline?.in_use?.audience
-                ? "bg-[#0075FF] text-white cursor-not-allowed"
-                : "text-white border border-[#0075FF] rounded-lg"
+                ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
               onClick={() =>
                 openModal({
@@ -515,10 +599,10 @@ export default function Questions() {
 
             <button
               disabled={!fetchLifeline?.available?.gpt ^fetchLifeline?.in_use?.gpt }
-              className={`flex items-center justify-center h-10 mt-2 w-[100%] text-center overflow-hidden ${
+              className={`flex items-center justify-center rounded-lg h-10 mt-2 w-[100%] text-center overflow-hidden ${
                 !fetchLifeline?.available?.gpt ^fetchLifeline?.in_use?.gpt
-                ? "bg-[#0075FF] text-white cursor-not-allowed"
-                : "text-white border border-[#0075FF] rounded-lg"
+                ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
               onClick={() =>
                 { fetchLifeline.in_use.gpt ? handleGPT():
@@ -530,10 +614,10 @@ export default function Questions() {
 
             <button
               disabled={!fetchLifeline?.available?.streak ^fetchLifeline?.in_use?.streak }
-              className={`flex items-center justify-center h-10 mt-2 w-[100%] text-center overflow-hidden ${
+              className={`flex items-center justify-center rounded-lg h-10 mt-2 w-[100%] text-center overflow-hidden ${
                 !fetchLifeline?.available?.streak ^fetchLifeline?.in_use?.streak
-                ? "bg-[#0075FF] text-white cursor-not-allowed"
-                : "text-white border border-[#0075FF] rounded-lg"
+                ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
               onClick={() =>
                 // { fetchLifeline.in_use.streak ? handleStreakLifeline():

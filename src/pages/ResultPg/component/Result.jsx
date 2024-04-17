@@ -74,8 +74,8 @@ const Home = () => {
             </div>
             <div className="left-mid h-[100px] w-full flex flex-col justify-center items-center bg-green-70 text-[20px] ">
               <div className="Lifelines text-white flex flex-col items-center justify-center">
-                <h3 className="heading2 text-[21px]">Lifelines used: </h3>
-                <h1 className="number font-bold text-[23px]">4</h1>
+                {/* <h3 className="heading2 text-[21px]">Lifelines used: </h3>
+                <h1 className="number font-bold text-[23px]">4</h1> */}
               </div>
             </div>
 

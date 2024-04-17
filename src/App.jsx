@@ -12,7 +12,9 @@ import UserContextProvider from '../context/UserContextProvider';
 import PrivateRoute from './components/PrivateRoute'
 import InstructionMain from './pages/InstrcutionPage/InstructionMain';
 import UserContext from '../context/UserContext';
-import { useContext , useState } from 'react';
+import { useContext , useState,useEffect } from 'react';
+import DisableClipboard from './components/DisableClipboard'
+import DisableNavigation from './components/DisableNavigation';
 
 
 
@@ -24,6 +26,24 @@ import { useContext , useState } from 'react';
 // )
 
 function App() {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // Prevent opening the console with keyboard shortcuts
+      if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c') || (event.keyCode === 123) || event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+    // Add event listener to intercept keyboard events
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Clean up the event listener on unmount
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+  
   // let path = router;
   const {currentUser}  = useContext(UserContext);
   // console.log("roter" , path);
@@ -35,6 +55,8 @@ function App() {
         
       <div className='main h-screen'>
     <Navbar/>
+    <DisableNavigation>
+    <DisableClipboard>
    <Routes>
       <Route path="/" element={<Login />} />
       <Route path="instruction" element={<InstructionMain />} />
@@ -50,6 +72,8 @@ function App() {
 
       
       </Routes>
+      </DisableClipboard>
+      </DisableNavigation>
       </div>
 
       

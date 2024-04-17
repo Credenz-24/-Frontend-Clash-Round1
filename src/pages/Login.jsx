@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect , useContext,useRef } from "react";
 import axios from 'axios';
 // import { useForm, SubmitHandler } from "react-hook-form"
 import "./Login.css";
@@ -12,12 +12,30 @@ const Login = () => {
   const [showLabelUser, setShowLabelUser] = useState(false);
   const [showLabelPass, setShowLabelPass] = useState(false);
   const {setUser} = useContext(UserContext);
+  const rootElementRef = useRef(null);
   const handleInputFocus1 = () => {
     //setShowUnderline(true); // Show the underline when input is focused
     setShowLabelUser(true);
     // document.getElementById("userInput").classList.add("animated-placeholder");
     // document.getElementById("userUnderline").classList.add("active");
   };
+
+  const enterFullScreen = () => {
+    const element = rootElementRef.current;
+    if (element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { // Firefox
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { // Edge
+            element.msRequestFullscreen();
+        }
+    } else {
+        console.error("The element to enter full-screen mode is not found.");
+    }
+};
 
   const handleInputFocus2 = () => {
    // setShowUnderline(true); // Show the underline when input is focused
@@ -78,6 +96,11 @@ const Login = () => {
 
   // };
   
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleLogin(event);
+    }
+  };
   const handleLogin = (event) => {
     event.preventDefault();
     console.log({ userId, password });
@@ -99,6 +122,7 @@ const Login = () => {
   
         const jwt = localStorage.getItem('token');
         console.log(jwt); // Log the retrieved JWT
+        enterFullScreen();
         navigate("/instruction");
   
         // Dismiss loading toast once login is completed
@@ -111,6 +135,7 @@ const Login = () => {
         console.log(err.response ? err.response.data.detail : err.message);
         // Dismiss loading toast if login fails
         toast.dismiss(loadingToastId);
+        toast.error("Invalid credentials");
       });
   };
 
@@ -118,7 +143,7 @@ const Login = () => {
     
     
     <>
-    <div
+    <div ref={rootElementRef}
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
     className="h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
     style={{backgroundImage: `url('../Background 2.jpeg')`, backgroundSize: 'cover'}}    
@@ -175,6 +200,7 @@ const Login = () => {
               onChange={(e) => setUserId(e.target.value)}
               onFocus={handleInputFocus1}
               onBlur={handleInputBlur1}
+              onKeyDown={handleKeyDown}
               
             />
             </div>
@@ -194,6 +220,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 onFocus={handleInputFocus2}
                 onBlur={handleInputBlur2}
+                onKeyDown={handleKeyDown}
               />
             </div>
             {/* <div role="radiogroup" className=" RadioButtons bg-red-40 w-full h-[40px] flex justify-center items-center gap-[40px]">

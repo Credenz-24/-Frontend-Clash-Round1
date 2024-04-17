@@ -99,7 +99,25 @@ module.exports = {
           scrollbarWidth: 'none',
           '-ms-overflow-style': 'none',
         },
+        '.scrollbar-thin' :{
+          scrollbarWidth :"thin",
+          scrollbarColor : "rgb(31 29 29) white"
+        },
+        '.scrollbar-webkit':{
+            "&::-webkit-scrollbar":{
+              width:"8px"
+            },
+            "&::-webkit-scrollbar-track" :{
+              background: "transparent"
+            },
+            "&::-webkit-scrollbar-thumb":{
+              backgroundColor: "rgb(31 41 55)",
+              borderRadius : "20px",
+              border: "1px solid white",
+            },
+        }
       };
+      
       addUtilities(newUtilities, ['responsive', 'hover']);
     }),
   ],

@@ -1,20 +1,23 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation , Link } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
 import { toast } from "react-toastify";
-
+import InstructionModal from './InstructionModal'
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [nav, setNav] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { setUser } = useContext(UserContext);
 
   const handleNav = () => {
     setNav(!nav);
   };
-
+  const handleInstructionsClick = () => {
+    setIsModalOpen(true); // Open the modal when "Instructions" is clicked
+  };
   const handleLogout = () => {
     axios
       .get('http://localhost:8000/core/logout/', {
@@ -35,6 +38,7 @@ function Navbar() {
   const isHomeRoute = location.pathname === '/';
 
   return (
+    <>
     <div
       className={`navbar h-24 w-full px-[5vw] text-white flex justify-between items-center ${
         isHomeRoute ? 'bg-transparent absolute top-0' : '' // Conditional background color
@@ -52,18 +56,18 @@ function Navbar() {
       <div className="nav-right text-[17px] font-normal justify-center items-center gap-[20px] hidden md:flex">
       {isHomeRoute ? (
         <>
-        <a href="/leaderboard" className="px-[20px] py-[10px] text-center">
+        <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
           Leaderboards
-        </a>
+        </Link>
         </>
       ) : (
       <>
-        <a href="/instruction" className="px-[20px] py-[10px] text-center">
+        <button onClick={handleInstructionsClick} className="px-[20px] py-[10px] text-center">
           Instructions
-        </a>
-        <a href="/leaderboard" className="px-[20px] py-[10px] text-center">
+        </button>
+        <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
           Leaderboards
-        </a>
+        </Link>
         <a
           onClick={() => handleLogout()}
           className="px-[20px] py-[10px] text-center cursor-pointer"
@@ -94,7 +98,7 @@ function Navbar() {
           <a href="/leaderboard" className="p-4 border-b border-zinc-700 w-full">
             Leaderboards
           </a>
-          <a href="/instruction" className="p-4 border-b border-zinc-700 w-full">
+          <a onClick={handleInstructionsClick} className="p-4 border-b border-zinc-700 w-full">
             Instructions
           </a>
           <a
@@ -106,6 +110,13 @@ function Navbar() {
         </div>
       </div>
     </div>
+    {isModalOpen && (
+        <InstructionModal
+          // Pass props to the Modal component as needed
+          onClose={() => setIsModalOpen(false)} // Close the modal when the "X" button is clicked
+        />
+      )}
+    </>
   );
 }
 
