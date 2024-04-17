@@ -15,7 +15,7 @@ const Junior = ({leadJunior}) => {
                 {/* <div className="current-rank h-[10%] w-full bg-green-0 flex justify-center items-center">
                     <div className="box h-full w-[700px] bg-[#09112c] border-blue-500 border-2 border-solid rounded-[5px] flex justify-between items-center px-[4vw] ">
                         <h1 className='text-white text-[30px]'>Your rank</h1>
-                        <h1 className='text-white text-[30px]'>{per.team_rank}</h1>
+                        <h1 className='text-white text-[30px]'>{}</h1>
                     </div>
                 </div> */}
                 <div className="juniors-table h-[60%] w-full flex justify-center items-center bg-green-40 ">

@@ -27,12 +27,12 @@ export default function Battery({streak}) {
                           strokeWidth: 4,
                           cornerRadius: 6,
                           fill: 'none',  // to fill battery body(white part)
-                          strokeColor: '#111'
+                          strokeColor: 'white'
                         },
                         batteryCap: {
                           fill: 'none',
                           strokeWidth: 4,
-                          strokeColor: '#111',
+                          strokeColor: 'white',
                           cornerRadius: 2,
                           capToBodyRatio: 0.4
                         },

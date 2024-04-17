@@ -33,7 +33,7 @@ function App() {
     
     <>
         
-      <div className='main'>
+      <div className='main h-screen'>
     <Navbar/>
    <Routes>
       <Route path="/" element={<Login />} />

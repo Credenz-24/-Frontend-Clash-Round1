@@ -15,25 +15,25 @@ const LifeLine = (props) => {
             id:1,
             title:"STREAK",
             img:"../fire.png",
-            content:"Something of lifeline 1"
+            content:"a"
         },
         {
             id:2,
-            title:"GPT",
+            title:"AI HELPER",
             img:"../technology.png",
-            content:"Something of lifeline 2"
+            content:"b"
         },
         {
             id:3,
             title:"POLL",
             img:"../polling.png",
-            content:"Something of lifeline 3"
+            content:"The Audience Poll lifeline allows players to seek assistance from the collective wisdom of the audience. Upon activation, players receive a graphical representation showcasing the distribution of answers from the audience. It gives the most probable response among the options presented"
         },
         {
             id:4,
             title:"SKIP",
             img:"../right-arrow.png",
-            content:"Something of lifeline 3"
+            content:"The Skip Lifeline grants the player the option to bypass the current question without providing an answer. This lifeline is particularly useful when uncertain about the correct response or desiring to progress swiftly through the game. Upon activation, the current question will be substituted with a new one"
         },
     ];
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function GPT_Modal({
   lifelineIns,
@@ -8,14 +8,17 @@ export default function GPT_Modal({
   inputValue,
   onChange,
   response,
+  question,
 }) {
-  const isCode = (text) => {
-    return text.includes("{") && text.includes("}");
-  };
+
+  const [prompt, setPrompt] = useState('');
+  useEffect(()=>{
+    setPrompt(question);
+  },[question])
 
   return (
     <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur-[10px] ">
         <div className="relative w-auto my-6 mx-auto">
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-900 outline-none focus:outline-none">
             <div className="flex items-center justify-between pt-6 pl-6 pr-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -28,7 +31,7 @@ export default function GPT_Modal({
               </button>
             </div>
             <div
-              className="text-white relative p-6 flex-auto h-[49vh] w-[20vw] max-h-[50vh] border-2 border-white m-6 resize-none overflow-y-scroll bg-slate-800"
+              className="text-white relative p-6 flex-auto h-[80vh] w-[60vw] max-h-[50vh] border-2 border-white m-6 resize-none overflow-y-scroll bg-slate-800"
               style={{
                 scrollbarColor: "gray black",
                 WebkitScrollbar: {
@@ -41,17 +44,14 @@ export default function GPT_Modal({
               <textarea
                 className="text-white bg-slate-800 border-white border-2 p-2 mr-2 w-full resize-none"
                 placeholder="Enter your input"
+                defaultValue={prompt}
                 value={inputValue}
                 onChange={onChange}
                 rows={5} 
               />
-              
-              <div
-                className={`text-white ${
-                  isCode(response) ? "pl-4" : "" 
-                }`}
-              >
+              <div>
                 <p>Answer to your question:</p>{response}
+                {console.log("question",question)}
               </div>
             </div>
             <div className="flex justify-center">

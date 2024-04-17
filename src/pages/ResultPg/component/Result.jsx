@@ -4,35 +4,52 @@ import { CircularProgressbar ,buildStyles} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 const Home = () => {
-  const [per, setPer] = useState([]);
+  const [per, setPer] = useState(null);
   const [isError, setIsError] = useState("");
 
 
-  const getMyPostData = async () => {
-    try {
-      const token = "81075178c5e566fc8b1835de29b8f2118f31c0f0"; // Replace 'your-authentication-token' with your actual token
-      const config = {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      };
-      const res = await axios.get(
-        "http://127.0.0.1:8000/core/result_page/",
-        config
-      );
-      setPer(res.data);
-    } catch (error) {
-      setIsError(error.message);
-    }
-  };
+  // const getMyPostData = async () => {
+  //   try {
+  //     const token = "845d04506e6fe72e2e5295b8ed82c151f0b7889a"; // Replace 'your-authentication-token' with your actual token
+  //     const config = {
+  //       headers: {
+  //         Authorization: `token ${token}`,
+  //       },
+  //     };
+  //     const res = await axios.get(
+  //       "http://127.0.0.1:8000/core/result_page/",
+  //       config
+  //     );
+  //     setPer(res.data);
+  //   } catch (error) {
+  //     setIsError(error.message);
+  //   }
+  // };
 
+  const getMyPostData =async()=>{
+  try {
+    axios
+      .get("http://127.0.0.1:8000/core/result_page/", {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+      })
+      .then((response) => {
+        setPer(response.data)
+        console.log("result", response.data)
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  } catch (error) {
+    console.error("Error skipping question:", error);
+  }
+  }
   //   console.log(per);
 
   // NOTE:  calling the function
   useEffect(() => {
     getMyPostData();
-    console.log(per);
-  }, [per]);
+    //console.log(per);
+  }, []);
 
   return (
     <>
@@ -46,11 +63,11 @@ const Home = () => {
               </div>
               <div className="name h-[12vh] w-full bg-purple-70 flex flex-col justify-center items-center">
                 <h1 className="names text-[26px] text-white font-semibold">
-                    {/* {per.username} */}
+                    {per?.username}
                     
                 </h1>
                 <h1 className="teamName text-white text-[20px] ">
-                    {/* {per.team_name} */}
+                    {per?.team_name}
                     
                 </h1>
               </div>
@@ -78,7 +95,7 @@ const Home = () => {
                 />
 
                 <div className="in flex flex-col h-[10vh] w-[35vh] rounded-[15px] bg-[#053884]  justify-center items-center">
-                  <h1 className="text-white text-[28px] font-semibold ">1</h1>
+                  <h1 className="text-white text-[28px] font-semibold ">{per?.team_score}</h1>
                   <h1 className="text-white opacity-[90%] text-[15px] font-semibold ">
                     Score
                   </h1>
@@ -89,7 +106,7 @@ const Home = () => {
 
                 <div className="in flex flex-col h-[10vh] w-[35vh] rounded-[15px] bg-[#053884] justify-center items-center">
                   {/* <h1 className="text-white text-[25px] font-semibold ">{per.team_score}</h1> */}
-                  <h1 className="text-white text-[28px] font-semibold ">1</h1>
+                  <h1 className="text-white text-[28px] font-semibold ">{per?.team_rank}</h1>
                   <h1 className="text-white opacity-[90%] text-[15px] font-semibold ">
                     Rank
                   </h1>
@@ -101,7 +118,7 @@ const Home = () => {
               <div className="flex flex-col h-full w-[40%] justify-center items-center gap-2 ">
                 <div className="circle flex flex-row justify-around item-center  gap-10">
                 <div style={{ width: 155, height: 155 }}>
-                    <CircularProgressbar value={75} text={`${75}%`} strokeWidth={12}  
+                    <CircularProgressbar value={(per?.user_accuracy)} text={`${(per?.user_accuracy)}%`} strokeWidth={12}  
                     styles={buildStyles({
                         pathColor: `#3B82F6`,
                         textColor: '#fff',
@@ -120,11 +137,11 @@ const Home = () => {
               <div className=" w-[40vh] h-[25vh] flex flex-col items-center justify-center gap-6 text-lg text-white">
                 <div className="w-[40vh] h-[20vh] justify-start items-center flex flex-row  gap-7">
                   <h3>Total Questions</h3>
-                  <div className=" rounded-lg h-[50px] w-[95px] bg-blue-500 font-semibold text-[18px]"></div>
+                  <div className=" rounded-lg h-[50px] w-[95px] bg-blue-500 font-semibold text-[18px] flex justify-center items-center">{per?.total_questions}</div>
                 </div>
                 <div className="w-[40vh] h-[20vh] flex flex-row justify-start items-center gap-1">
                   <h3>Correct Questions</h3>
-                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px]"></div>
+                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px]  flex justify-center items-center">{per?.correct_questions}</div>
                 </div>
               </div>
             </div>

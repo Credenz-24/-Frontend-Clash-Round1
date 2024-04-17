@@ -80,7 +80,7 @@ function Leaderboard() {
             {(currentStep=== 0) ? (
                 <>
                     <Junior leadJunior={juniorLeaderboard}/>
-                    <div className="buttons absolute bottom-0 w-full bg-orange- flex justify-center items-center gap-[50px]">
+                    <div className="buttons absolute bottom-[1%] w-full bg-orange- flex justify-center items-center gap-[50px]">
                         <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handleNext}>
                             SENIORS
                         </button>
@@ -92,7 +92,7 @@ function Leaderboard() {
             {(currentStep=== 1) ? (
                 <>
                     <Senior leadSenior={seniorLeaderboard}/>
-                    <div className="buttons h-[5%] w-full bg-orange-60 flex justify-center items-center gap-[50px]">
+                    <div className="buttons absolute bottom-[1%] w-full bg-orange-60 flex justify-center items-center gap-[50px]">
                         <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handlePrev}>
                             JUNIORS
                         </button>

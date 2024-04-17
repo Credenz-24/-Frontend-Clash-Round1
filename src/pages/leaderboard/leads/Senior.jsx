@@ -20,7 +20,7 @@ const Senior = ({leadSenior}) => {
                 </div> */}
                 <div className="juniors-table h-[60%] w-full flex justify-center items-center bg-green-40 ">
                     <div className=" junior h-[300px] w-[700px] mx-auto bg-red-80 shadow-md rounded-lg overflow-y-scroll no-scrollbar border-[2px] border-solid border-blue-500">
-                    <h2 className="text-2xl sticky top-0 font-bold text-center text-white bg-[#09112c] p-4 border-b-[2px] border-solid border-blue-500">Junior Leaderboard</h2>
+                    <h2 className="text-2xl sticky top-0 font-bold text-center text-white bg-[#09112c] p-4 border-b-[2px] border-solid border-blue-500">Senior Leaderboard</h2>
                     <ul className="divide-y divide-blue-900">
                         {leadSenior.map((entry, index) => (
                             <li key={index} className="flex justify-between items-center h-[78px] w-[100%] p-4 hover:bg-[#0b143e] hover:text-zinc-800">
