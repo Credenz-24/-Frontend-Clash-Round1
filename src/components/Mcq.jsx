@@ -17,6 +17,7 @@ import {
 } from "../../axios/api";
 import Battery from "./Battery";
 import Streak_Modal from "./Streak_Modal";
+import { toast } from "react-toastify";
 
 export default function Questions() {
   const [myData, setMyData] = useState({}); //Current_question Data
@@ -93,21 +94,21 @@ export default function Questions() {
     setGptSelected(false);
   }, []);
 
-  useEffect(() => {
-    fetchTimerValue();
-  }, []);
-
   // useEffect(() => {
-  //   const timerInterval = setInterval(() => {
-  //     if (timer > 0) {
-  //       setTimer(timer - 1);
-  //     } else {
-  //       clearInterval(timerInterval);
-  //        navigate('/result');
-  //     }
-  //   }, 1000);
-  //   return () => clearInterval(timerInterval);
-  // }, [timer]);
+  //   fetchTimerValue();
+  // }, []);
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      if (timer > 0) {
+        setTimer(timer - 1);
+      } else {
+        clearInterval(timerInterval);
+         navigate('/result');
+      }
+    }, 1000);
+    return () => clearInterval(timerInterval);
+  }, [timer]);
 
 
   useEffect(() => {
@@ -133,7 +134,7 @@ export default function Questions() {
       console.error("Error fetching lifeline:", error);
     }
   };
-  console.log("123",localStorage.getItem("token"));
+  // console.log("123",localStorage.getItem("token"));
   //Fetch Question from current_question/
   const fetchQuestion = async () => {
     try {
@@ -146,6 +147,7 @@ export default function Questions() {
       setMyData(response.data);
       //console.log("questions",response.data.question_data.question_md)
       setIsError(false);
+      setTimer(response.data.time_remaining);
       setdataGPT("");
       console.log("res fetch question: ", response.data);
     } catch (error) {
@@ -162,7 +164,6 @@ export default function Questions() {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((res) => {
-        console.log("res handlesubmit:", res);
         fetchQuestion();
         fetchLifelines();
         setSelectedOption("");
@@ -171,11 +172,13 @@ export default function Questions() {
         setdataGPT("");
         setShowStreakLifelinedata(false);
         setBotResponse("");
-        if(res.data.message === "question over"){
-          //navigate('/result');
-        }
+
       })
       .catch((error) => {
+        console.log("res handlesubmit:", error.response.status,typeof(error.response.status));
+        if(error.response.status === 307 || error.response.status === 500){
+          navigate('/result');
+        }
         console.error("Error submitting option:", error);
       });
   };
@@ -186,7 +189,7 @@ export default function Questions() {
     try {
       axios
         .get("http://127.0.0.1:8000/core/skip_question/", {
-          headers: { Authorization: `${localStorage.getItem("token")}` },
+          headers: { Authorization:`${localStorage.getItem("token")}` },
         })
         .then((response) => {
           console.log("Question skipped successfully");
@@ -211,6 +214,7 @@ export default function Questions() {
 
   //Use gemini gpt/
   const handleGPT = async () => {
+    setdataGPT(myData.question_data.question_md);
     // if (showGPTModal) {
     //   setShowModal(false);
     // } else if(!showGPTModal) {
@@ -221,6 +225,7 @@ export default function Questions() {
     // if(fetchLifeline?.in_use?.gpt){
     //    setShowModal(false);
     // }
+    const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
         .post(
@@ -233,12 +238,14 @@ export default function Questions() {
           }
         )
         .then((response) => {
+          console.log("errstatus",response.data.status);
           console.log("GPT");
           setFetchLifeline((prevState) => ({ ...prevState, gpt: false }));
           setGptSelected(false);
           console.log(response.data);
           setBotResponse(response.data.bot_message);
           // setShowModal(false);
+          toast.dismiss(loadingToastId);
           setShowGPTModal(true);
           setAudiencePollVisible(false);
           setGptSelected(true);
@@ -252,9 +259,11 @@ export default function Questions() {
             setIsError(true);
             console.error("Error fetching question:", error);
           }
+          toast.dismiss(loadingToastId);
         });
     } catch (error) {
       console.error("Error skipping question:", error);
+      toast.dismiss(loadingToastId);
     }
   };
 
@@ -464,7 +473,7 @@ export default function Questions() {
             )}
           </div>
           <div className="m-4 flex flex-col items-center justify-center gap-y-4">
-            {console.log("skip" ,fetchLifeline?.available?.skip)}
+            {/* {console.log("skip" ,fetchLifeline?.available?.skip)} */}
             <button
               disabled={!fetchLifeline?.available?.skip}
               className={`flex items-center justify-center h-10 mt-2 w-[100%] text-center overflow-hidden ${
@@ -481,11 +490,12 @@ export default function Questions() {
               Skip Question
             </button>
             
-            {console.log("audypoll" ,fetchLifeline?.available?.audience)}
-            {console.log("audypollin_use" ,fetchLifeline?.in_use?.audience)}
-            <button
+            {/* {console.log("audypoll" ,fetchLifeline?.available?.audience)}
+            {console.log("audypollin_use" ,fetchLifeline?.in_use?.audience)} */}
+
+              <button
               disabled={!fetchLifeline?.available?.audience ^ fetchLifeline?.in_use?.audience }
-              className={`flex items-center justify-center h-10 mt-2 w-[100%] text-center overflow-hidden ${
+              className={`flex items-center justify-center h-10 mt-2 w-full text-center overflow-hidden ${
                 !fetchLifeline?.available?.audience ^ fetchLifeline?.in_use?.audience
                 ? "bg-[#0075FF] text-white cursor-not-allowed"
                 : "text-white border border-[#0075FF] rounded-lg"
@@ -497,8 +507,11 @@ export default function Questions() {
                 })
               }
             >
+               {/* <img src="./polling.png" className="w-[20%] h-6"/> */}
               Audience Poll
             </button>
+          
+            
 
             <button
               disabled={!fetchLifeline?.available?.gpt ^fetchLifeline?.in_use?.gpt }

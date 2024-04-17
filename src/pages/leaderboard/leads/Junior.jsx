@@ -3,8 +3,8 @@ import TopCards from "../props/TopCards";
 const Junior = ({leadJunior}) => {
     return ( 
         <>
-            <div className="Team h-full w-full flex flex-col justify-center items-center ">
-                <div className="top-3-juniors h-[30%] w-full bg-purple-40 flex justify-center items-center gap-[6vw] ">
+            <div className="Team h-[90%] w-full flex flex-col justify-center items-center bg-red-4 ">
+                <div className="top-3-juniors h-[20%] w-full bg-purple-40 flex justify-center items-center gap-[6vw] ">
                 {
                     leadJunior.filter((items, index) => (index < 3))
                         .map((item) => (
@@ -18,7 +18,7 @@ const Junior = ({leadJunior}) => {
                         <h1 className='text-white text-[30px]'>{}</h1>
                     </div>
                 </div> */}
-                <div className="juniors-table h-[60%] w-full flex justify-center items-center bg-green-40 ">
+                <div className="juniors-table h-[70%] w-full flex justify-center items-center bg-green-40 ">
                     <div className=" junior h-[300px] w-[700px] mx-auto bg-red-80 shadow-md rounded-lg overflow-y-scroll no-scrollbar border-[2px] border-solid border-blue-500">
                     <h2 className="text-2xl sticky top-0 font-bold text-center text-white bg-[#09112c] p-4 border-b-[2px] border-solid border-blue-500">Junior Leaderboard</h2>
                     <ul className="divide-y divide-blue-900">

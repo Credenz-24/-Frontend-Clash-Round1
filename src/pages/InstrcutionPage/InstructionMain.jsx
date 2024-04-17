@@ -20,27 +20,28 @@ const InstructionMain = (props) => {
             id:1,
             title:"STREAK",
             img:"../fire.png",
-            content:"Something of lifeline 1"
+            content:"The Streak Lifeline awards players who achieve a consecutive streak of four correct answers by revealing a Caesar Cipher codeword for the subsequent question. Answer is obtained in encoded form"
         },
         {
             id:2,
-            title:"GPT",
+            title:"AI HELPER",
             img:"../technology.png",
-            content:"Something of lifeline 2"
+            content:"The AI Helper lifeline empowers players to utilize artificial intelligence to procure answers. By activating this lifeline, players gain access to an AI-driven tool for obtaining response"
         },
         {
             id:3,
             title:"POLL",
             img:"../polling.png",
-            content:"Something of lifeline 3"
+            content:"The Audience Poll lifeline allows players to seek assistance from the collective wisdom of the audience. Upon activation, players receive a graphical representation of most probable option"
         },
         {
             id:4,
             title:"SKIP",
             img:"../right-arrow.png",
-            content:"Something of lifeline 3"
+            content:"The Skip Lifeline grants the player the option to bypass the current question without providing an answer.Upon activation, the current question will be substituted with a new one"
         },
     ];
+
 
     const handleProceedClick = () => {
         if (acceptedConditions) {

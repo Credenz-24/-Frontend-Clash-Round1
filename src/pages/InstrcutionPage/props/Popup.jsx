@@ -26,7 +26,7 @@ const Popup = (props) => {
                         <h1 className="text-white text-[30px]">{text.title}</h1>
                     </div>
                     <div className="desc h-[20%] w-full bg-blue-40 flex justify-center items-center">
-                        <h4 className="text-white m-10 mt-[35%]">{text.content}</h4>
+                        <h4 className="text-white m-10 mt-[35%] text-justify">{text.content}</h4>
                     </div>
                     <div className="closeBtn mt-[25%] mb-10 h-[20%] w-full flex justify-center items-center">
                         <button className="closeBtn text-white  px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800" onClick={close}>Close</button>

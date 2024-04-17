@@ -45,7 +45,7 @@ export default function GPT_Modal({
                 className="text-white bg-slate-800 border-white border-2 p-2 mr-2 w-full resize-none"
                 placeholder="Enter your input"
                 defaultValue={prompt}
-                value={inputValue}
+                // value={prompt}
                 onChange={onChange}
                 rows={5} 
               />
