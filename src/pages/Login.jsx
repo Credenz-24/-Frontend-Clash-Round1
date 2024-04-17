@@ -4,6 +4,7 @@ import axios from 'axios';
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext'
+import { toast } from "react-toastify";
 
 
 const Login = () => {
@@ -97,6 +98,7 @@ const Login = () => {
         const jwt = localStorage.getItem('token');
         console.log(jwt); // Log the retrieved JWT
         navigate("/instruction")
+        toast("Logged In SuccessFully !");
         setUser(loginData);
   })
       .catch((err) => console.log(err.response ? err.response.data.detail : err.message));
@@ -110,7 +112,7 @@ const Login = () => {
     <>
     <div
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
-    className="h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent "
+    className="h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
     style={{backgroundImage: `url('../Background 1.jpeg')`, backgroundSize: 'cover'}}    
     // onClick={createRipple}
     >
@@ -145,7 +147,7 @@ const Login = () => {
           onSubmit={handleLogin}
           className=" h-[500px] w-full  xl:mb- sm:mt-6 md:mt-20 lg:mt-20 xl:mt-20 2xl:mt-0 flex z-10 md:w-[370px] sm:w-[340px] flex-col justify-center items-center p-[0px] bg-opacity-0 rounded-[20px] bg-clip-padding backdrop-filter backdrop-blur-[30px] border border-zinc-600 gradient-shadow"
         >
-        <div className="h-[100%] w-full px-[px] flex flex-col justify-center items-center gap-[20px] ">
+        <div className="h-[100%] w-full px-[px] flex flex-col justify-center items-center gap-[40px] ">
           <h1 className="text-white justify-center text-center items-center text-[40px] font-semibold">
             Login
           </h1>
@@ -186,7 +188,7 @@ const Login = () => {
                 onBlur={handleInputBlur2}
               />
             </div>
-            <div role="radiogroup" className=" RadioButtons bg-red-40 w-full h-[40px] flex justify-center items-center gap-[40px]">
+            {/* <div role="radiogroup" className=" RadioButtons bg-red-40 w-full h-[40px] flex justify-center items-center gap-[40px]">
               <div className="flex items-center">
                 <div className="bg-white dark:bg-gray-100 rounded-full w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
                   <input
@@ -228,7 +230,7 @@ const Login = () => {
                   Senior
                 </label>
               </div>
-            </div>
+            </div> */}
             <div className=" h-[15%] w-full flex justify-center items-center">            
               <button
                 
