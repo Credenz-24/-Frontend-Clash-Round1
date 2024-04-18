@@ -16,9 +16,9 @@ export default function Battery({streak}) {
   return (
     <>
     {/* <FontAwesomeIcon icon={faBoltLightning} fade /> */}
-      <div className={`${streak<8 ? 'mx-6' : 'mx-3'} flex`}>
+      <div className={`${streak<4 ? 'mx-6' : 'mx-3'} flex`}>
           <div className='flex justify-center items-center  -mr-6'>
-              {streak >= 8 && <FontAwesomeIcon icon={faBoltLightning} fade  style={{color: "orange",}} />}
+              {streak >= 4 && <FontAwesomeIcon icon={faBoltLightning} fade  style={{color: "orange",}} />}
           </div>
 
           <div  >
@@ -37,7 +37,7 @@ export default function Battery({streak}) {
                           capToBodyRatio: 0.4
                         },
                         batteryMeter: {
-                          fill: streak>=8? 'green':'yellow',
+                          fill: streak>=4? 'green':'yellow',
                           lowBatteryValue: 3,
                           lowBatteryFill: 'red',
                           outerGap: 1,
@@ -46,7 +46,7 @@ export default function Battery({streak}) {
                         },
                         readingText: {
                           lightContrastColor: '#111',
-                          darkContrastColor: streak>=8? '#fff' :'black',
+                          darkContrastColor: streak>=4? '#fff' :'black',
                           lowBatteryColor: 'red',
                           fontFamily: 'Helvetica',
                           fontSize: 15,

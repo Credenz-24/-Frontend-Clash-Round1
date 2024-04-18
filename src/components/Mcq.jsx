@@ -47,61 +47,61 @@ export default function Questions() {
   const apiUrl = 'http://127.0.0.1:8000/core/tab_switch/';
 
   //Tab_Switching 
-  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  //const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
-  const handleEvent = async (eventType) => {
-      try {
-          const token = localStorage.getItem('token');
-          const response = await axios.post(apiUrl, {
-              bool: eventType === 'tabSwitch'
-          }, {
-              headers: {
-                  Authorization: `${token}`,
-              }
-          });
-          if (response.status === 200) {
-              const { message, count } = response.data;
-              console.log('API response:', message, count);
-              setTabSwitchCount(count);
-              if (count > 3) {
-                navigate("/result")
-                toast.error('Your test has been auto-submitted due to excessive tab switching.');
-            }
-              else if (count > 0) {
-                  toast.warning(`Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`);
-              }
-          } else if (response.status === 307) {
-              const { message } = response.data;
-              if (message === 'time over') {
-                  toast.error('Time is over. Your test has been submitted.');
-              } else if (message === 'submitted') {
-                  toast.error('Your test has been auto-submitted due to excessive tab switching.');
-              }
-          }
-      } catch (error) {
-          console.error('Error handling event:', error);
-          handleSubmit()
-          toast.error('An error occurred. Please try again.');
-      }
-  };
-  useEffect(() => {
-      const handleFullscreenChange = () => {
-          if (!document.fullscreenElement) {
-              handleEvent('fullscreenExit');
-          }
-      };
-      document.addEventListener('fullscreenchange', handleFullscreenChange);
-      const handleVisibilityChange = () => {
-          if (document.visibilityState === 'hidden') {
-              handleEvent('tabSwitch');
-          }
-      };
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-      return () => {
-          document.removeEventListener('fullscreenchange', handleFullscreenChange);
-          document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
-  }, []);
+  // const handleEvent = async (eventType) => {
+  //     try {
+  //         const token = localStorage.getItem('token');
+  //         const response = await axios.post(apiUrl, {
+  //             bool: eventType === 'tabSwitch'
+  //         }, {
+  //             headers: {
+  //                 Authorization: `${token}`,
+  //             }
+  //         });
+  //         if (response.status === 200) {
+  //             const { message, count } = response.data;
+  //             console.log('API response:', message, count);
+  //             setTabSwitchCount(count);
+  //             if (count > 3) {
+  //               navigate("/result")
+  //               toast.error('Your test has been auto-submitted due to excessive tab switching.');
+  //           }
+  //             else if (count > 0) {
+  //                 toast.warning(`Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`);
+  //             }
+  //         } else if (response.status === 307) {
+  //             const { message } = response.data;
+  //             if (message === 'time over') {
+  //                 toast.error('Time is over. Your test has been submitted.');
+  //             } else if (message === 'submitted') {
+  //                 toast.error('Your test has been auto-submitted due to excessive tab switching.');
+  //             }
+  //         }
+  //     } catch (error) {
+  //         console.error('Error handling event:', error);
+  //         handleSubmit()
+  //         toast.error('An error occurred. Please try again.');
+  //     }
+  // };
+  // useEffect(() => {
+  //     const handleFullscreenChange = () => {
+  //         if (!document.fullscreenElement) {
+  //             handleEvent('fullscreenExit');
+  //         }
+  //     };
+  //     document.addEventListener('fullscreenchange', handleFullscreenChange);
+  //     const handleVisibilityChange = () => {
+  //         if (document.visibilityState === 'hidden') {
+  //             handleEvent('tabSwitch');
+  //         }
+  //     };
+  //     document.addEventListener('visibilitychange', handleVisibilityChange);
+  //     return () => {
+  //         document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  //         document.removeEventListener('visibilitychange', handleVisibilityChange);
+  //     };
+  // }, []);
 
 
 
@@ -287,63 +287,94 @@ export default function Questions() {
 
   //Use gemini gpt/
   const handleGPT = async () => {
+    setShowGPTModal(true);
     setdataGPT(myData.question_data.question_md);
-    // if (showGPTModal) {
-    //   setShowModal(false);
-    // } else if(!showGPTModal) {
-    //   setShowModal(true);
-    // }
-    // else 
+
     console.log("shmdl" , showModal);
-    // if(fetchLifeline?.in_use?.gpt){
-    //    setShowModal(false);
-    // }
-    const loadingToastId = toast.loading("Please Wait!");
-    try {
-      axios
-        .post(
+    console.log(fetchLifeline.in_use.gpt,"Lifeline msg")
+ 
+    if(fetchLifeline?.in_use.gpt){
+      console.log("Using gpt")
+        axios
+        .get(
           "http://127.0.0.1:8000/core/gpt/",
-          { message: dataGPT },
+          // { message: dataGPT },
           {
-            headers: {
-              Authorization: `${localStorage.getItem("token")}`,
-            },
+            headers: { Authorization:`${localStorage.getItem("token")}` },
           }
         )
         .then((response) => {
-          console.log("errstatus",response.data.status);
+          console.log("errstatus",response);
           console.log("GPT");
           setFetchLifeline((prevState) => ({ ...prevState, gpt: false }));
           setGptSelected(false);
           console.log(response.data);
-          setBotResponse(response.data.bot_message);
+          //setBotResponse(response.data.bot_message);
           // setShowModal(false);
-          toast.dismiss(loadingToastId);
+          toast.dismiss();
           setShowGPTModal(true);
           setAudiencePollVisible(false);
           setGptSelected(true);
         })
         .catch((error) => {
+          console.log("gpt ",error.response.status)
           if (error.response && error.response.status === 400) {
             setIsError(true);
-            setGptSelected(true);
+            //setGptSelected(true);
             setShowGPTModal(true);
           } else {
             setIsError(true);
             console.error("Error fetching question:", error);
           }
-          toast.dismiss(loadingToastId);
+          toast.dismiss();
         });
-    } catch (error) {
-      console.error("Error skipping question:", error);
-      toast.dismiss(loadingToastId);
     }
+    // else{
+    //   const loadingToastId = toast.loading("Please Wait!");
+
+    //   axios
+    //     .post(
+    //       "http://127.0.0.1:8000/core/gpt/",
+    //       { message: dataGPT },
+    //       {
+    //         headers: {
+    //           Authorization: `${localStorage.getItem("token")}`,
+    //         },
+    //       }
+    //     )
+    //     .then((response) => {
+    //       console.log("errstatus",response.data.status);
+    //       console.log("GPT");
+    //       setFetchLifeline((prevState) => ({ ...prevState, gpt: false }));
+    //       setGptSelected(false);
+    //       console.log(response.data);
+    //       setPromptResponse(response.data.bot_message);
+    //       // setShowModal(false);
+    //       toast.dismiss(loadingToastId);
+    //       setShowGPTModal(true);
+    //       setAudiencePollVisible(false);
+    //       setGptSelected(true);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error)
+    //       if (error.response && error.response.status === 400) {
+    //         setIsError(true);
+    //         setGptSelected(true);
+    //         setShowGPTModal(true);
+    //       } else {
+    //         setIsError(true);
+    //         console.error("Error fetching question:", error);
+    //       }
+    //       toast.dismiss(loadingToastId);
+    //     });
+    // }
+    
   };
 
   //Use streak lifeline from /streak_lifeline
   const handleStreakLifeline = async () => {
     // setShowModal(true);
-    const loadingToastId = toast.loading("Please Wait!");
+    // const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
         .get("http://127.0.0.1:8000/core/streak_lifeline/", {
@@ -354,7 +385,7 @@ export default function Questions() {
           console.log(response.data);
           setHandleStreak(true);
           setStreakLifelineData(response.data);
-          toast.dismiss(loadingToastId);
+          toast.dismiss();
           setShowStreakLifelinedata(true);
           setAudiencePollVisible(false);
           setShowStreakModal(true);
@@ -363,11 +394,11 @@ export default function Questions() {
         })
         .catch((error) => {
           console.error("Error streak lifeline", error);
-          toast.dismiss(loadingToastId);
+          toast.dismiss();
         });
     } catch (error) {
       console.error("Error streak lifeline", error);
-      toast.dismiss(loadingToastId);
+      toast.dismiss();
     }
   };
 
@@ -378,25 +409,25 @@ export default function Questions() {
     try {
       axios
         .get("http://127.0.0.1:8000/core/audiance_poll/", {
-          headers: { Authorization: `${localStorage.getItem("token")}` },
+          headers: { Authorization: ` ${localStorage.getItem("token")}` },
         })
         .then((response) => {
           console.log("Audience");
           console.log(response.data);
           setAudiencePollData(response.data.correct_answer_percentages);
           setAudiencePollVisible(true);
-          toast.dismiss(loadingToastId);
+          toast.dismiss();
           setBotResponse("");
           setFetchLifeline((prevState) => ({ ...prevState, audiance: false }));
           fetchLifelines();
         })
         .catch((error) => {
           console.error("Error skipping question:", error);
-          toast.dismiss(loadingToastId);
+          toast.dismiss();
         });
     } catch (error) {
       console.error("Error skipping question:", error);
-      toast.dismiss(loadingToastId);
+      toast.dismiss();
     }
   };
 
@@ -422,7 +453,7 @@ export default function Questions() {
 
   return (
     <>
-      <div className="mt-12 ">
+      <div className="mt-2">
       <div className="text-white bg-green- flex flex-row relative"><span className="border border-[#0075FF] rounded-lg p-4 mb-2">Timer: {formatTime(timer)} minutes</span></div>
         {myData.question_data && (
           <div className="h-[40vh] w-[50vw] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
@@ -430,12 +461,12 @@ export default function Questions() {
               <span className="font-bold text-xl"></span>
               <pre
               className=""
-                // style={{
-                //   whiteSpace: 'pre-wrap',
-                //   scrollbarColor: "gray black",
-                //   WebkitScrollbar: { width: "10px", backgroundColor: "black" },
-                //   scrollbarWidth: "thin"
-                // }}
+                style={{
+                  whiteSpace: 'pre-wrap',
+                  scrollbarColor: "gray black",
+                  WebkitScrollbar: { width: "10px", backgroundColor: "black" },
+                  scrollbarWidth: "thin"
+                }}
                 >
                   {myData.question_data.question_md}
               </pre>
@@ -502,7 +533,8 @@ export default function Questions() {
           )}
         </div>
         {/* <Graph/> */}
-        <div className="align-middle justify-center relative flex mt-12">
+        <div className="align-middle justify-center relative flex mt-6
+        ">
           <button
             type="button"
             // disabled={!selectedOption}
@@ -640,12 +672,7 @@ export default function Questions() {
               question={myData.question_data.question_md}
             />
           )}
-          {/* {!showGPTModal && gptSelected && botResponse && (
-            <div className="text-white mt-10">
-              <p>Answer to your question:</p>
-              {botResponse}
-            </div>
-          )} */}
+    
 
           {handleStreak && showStreakLifelinedata && showStreakModal && (
             <Streak_Modal

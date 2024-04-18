@@ -31,26 +31,6 @@ function Leaderboard() {
         }
       };
 
-    const getMyPostData = async () => {
-        try {
-            const token = 'a0f19bad8e2eb1a21769e9c2be1ea343fa02b1c8'; // Replace 'your-authentication-token' with your actual token
-            const config = {
-                headers: {
-                    Authorization: `token ${token}`
-                }
-            };
-            const res = await axios.get("http://127.0.0.1:8000/core/result_page/", config);
-            setPer(res.data);
-        } catch (error) {
-            setIsError(error.message);
-        }
-    };
-    console.log(per);
-
-    useEffect(() => {
-        getMyPostData();
-    }, [per]);
-
     useEffect(() => {
         const fetchData = async () => {
             try {

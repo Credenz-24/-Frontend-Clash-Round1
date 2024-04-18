@@ -36,6 +36,9 @@ function Navbar() {
   };
 
   const isHomeRoute = location.pathname === '/';
+  const isInstructionRoute = location.pathname === '/instruction';
+  const isResultRoute = location.pathname === '/result';
+  const isQuestionRoute = location.pathname === '/question';
 
   return (
     <>
@@ -62,12 +65,17 @@ function Navbar() {
         </>
       ) : (
       <>
+      {isInstructionRoute ? (null):(
         <button onClick={handleInstructionsClick} className="px-[20px] py-[10px] text-center">
           Instructions
         </button>
+      )
+    }
+    {isQuestionRoute ? (null):(
         <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
           Leaderboards
         </Link>
+    )}
         <a
           onClick={() => handleLogout()}
           className="px-[20px] py-[10px] text-center cursor-pointer"

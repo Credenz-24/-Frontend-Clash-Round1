@@ -1,7 +1,7 @@
 const TopCards = ({name, rank, teamScore}) => {
     return ( 
         <>
-            <div className="card h-[130px] w-[310px] py-[px] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px] ">
+            <div className="card h-[130px] w-[310px] py-[px] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px]">
                 <div className="user h-[50%] w-full bg-yellow-30 flex justify-center items-center ">
                     <div className="trophy-image w-[30%] h-full bg-red- flex justify-center items-center">
                         <img src="../diver.png" alt="" className="h-[50px] w-[50px]" />
@@ -12,14 +12,10 @@ const TopCards = ({name, rank, teamScore}) => {
                     </div>
 
                 </div>
-                <div className="stats  h-[50%] w-full bg-blue-30 flex justify-center items-centers ">
-                    <div className="questions-solved h-full w-[60%] bg-green-90 flex flex-col justify-center items-center ">
-                        <h5 className="text-[15px] text-white">Team Score</h5>
-                        <h1 className="text-[20px] text-white">{teamScore}</h1>
-                    </div>
-                    <div className="accuracy h-full w-[40%] bg-cyan- flex flex-col justify-center items-center">
-                        <h5 className="text-[15px] text-white">Accuracy</h5>
-                        <h1 className="text-[20px] text-white">98%</h1>
+                <div className="stats h-[50%] w-full bg-blue-30 flex justify-center items-center ">
+                    <div className="questions-solved h-full w-[60%] bg-green-90 flex flex-col justify-center items-center align-middle text-center">
+                        <h5 className="text-[15px] text-white text-center">Team Score</h5>
+                        <h1 className="text-[20px] text-white text-center">{teamScore}</h1>
                     </div>
                 </div>
             

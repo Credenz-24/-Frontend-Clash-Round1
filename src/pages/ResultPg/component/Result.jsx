@@ -53,7 +53,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="main h-[86vh] w-full flex flex-col justify-center items-center ">
+      <div className="main h-[86vh] w-full flex flex-col justify-center items-center z-1">
         <div className="container flex flex-wrap items-center justify-center h-[100%] w-full gap-16">
           <div className="leftbox w-72 h-[80vh] rounded-3xl flex flex-col justify-evenly items-center z-[100] backdrop-blur-[20px] border-2 border-blue-500 px-[10px] py-[20px]">
             <div className="left-top flex flex-col justify-center items-center space-[10px] bg-red-90  w-full">
@@ -80,9 +80,7 @@ const Home = () => {
             </div>
 
             <div className="left-bottom flex flex-col justify-center items-center gap-[20px] bg-purple-60  w-full">
-              <button className="bg-blue-500 text-[20px] hover:bg-blue-800 text-white py-2 px-4 rounded-full">
-                Feedback
-              </button>
+
             </div>
           </div>
           <div className="rightbox  flex flex-col w-[120vh] h-[80vh] rounded-[30px] backdrop-blur-[20px] border-2 border-blue-500  justify-center items-start z-[100]">
@@ -95,7 +93,7 @@ const Home = () => {
                 />
 
                 <div className="in flex flex-col h-[10vh] w-[35vh] rounded-[15px] bg-[#053884]  justify-center items-center">
-                  <h1 className="text-white text-[28px] font-semibold ">{per?.team_score}</h1>
+                  <h1 className="text-white text-[28px] font-semibold ">{per?.overall_score}</h1>
                   <h1 className="text-white opacity-[90%] text-[15px] font-semibold ">
                     Score
                   </h1>

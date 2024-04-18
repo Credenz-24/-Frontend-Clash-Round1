@@ -67,11 +67,18 @@ const Login = () => {
   
 
   const [loginType, setLoginType] = useState("individual"); // 'individual' or 'team'
+  const [isTeam , setIsTeam] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLoginTypeChange = (event) => {
     setLoginType(event.target.value);
+    if(event.target.value === "Team"){
+      setIsTeam(true);
+    }
+    else{
+      setIsTeam(false);
+    }
     console.log(event.target.value)
   };
 
@@ -108,22 +115,34 @@ const Login = () => {
     const loginData = {
       username: userId,
       password: password,
+      is_team: isTeam,
     };
   
     // Display loading toast
     const loadingToastId = toast.loading("Logging in...");
   
-    axios.post('http://localhost:8000/core/login/', loginData)
+    axios.post('http://127.0.0.1:8000/core/login/', loginData)
       .then((res) => {
-        console.log(res.data.token);
+        console.log("token",res.data.token);
   
         localStorage.setItem('token', res.data.token);
         console.log(res.data.jwt);
-  
+        if(res.data.token){
+          navigate("/instruction");
+        }
+        else{
+          navigate("/");
+          toast.info(res.data.message);
+          toast.dismiss(loadingToastId);
+          return;
+        }
         const jwt = localStorage.getItem('token');
         console.log(jwt); // Log the retrieved JWT
         enterFullScreen();
-        navigate("/instruction");
+
+        console.log("mssg" , res.data.message);
+
+        
   
         // Dismiss loading toast once login is completed
         toast.dismiss(loadingToastId);
@@ -132,10 +151,10 @@ const Login = () => {
         setUser(loginData);
       })
       .catch((err) => {
-        console.log(err.response ? err.response.data.detail : err.message);
+        console.log("errror",err.response ? err.response.data.detail : err.message);
         // Dismiss loading toast if login fails
         toast.dismiss(loadingToastId);
-        toast.error("Invalid credentials");
+        toast.error(err.message);
       });
   };
 
@@ -223,7 +242,7 @@ const Login = () => {
                 onKeyDown={handleKeyDown}
               />
             </div>
-            {/* <div role="radiogroup" className=" RadioButtons bg-red-40 w-full h-[40px] flex justify-center items-center gap-[40px]">
+            <div role="radiogroup" className=" RadioButtons bg-red-40 w-full h-[40px] flex justify-center items-center gap-[40px]">
               <div className="flex items-center">
                 <div className="bg-white dark:bg-gray-100 rounded-full w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
                   <input
@@ -239,9 +258,9 @@ const Login = () => {
                 </div>
                 <label
                   id="label2"
-                  className="text-[22px] ml-2 leading-4 font-normal text-gray-800 dark:text-gray-100"
+                  className="text-[22px] ml-2 leading-4 font-normal text-white dark:text-gray-100"
                 >
-                  Junior
+                  Individual
                 </label>
               </div>
 
@@ -260,12 +279,12 @@ const Login = () => {
                 </div>
                 <label
                   id="label1"
-                  className="ml-2 text-[22px] leading-4 font-normal text-gray-800 dark:text-gray-100"
+                  className="ml-2 text-[22px] leading-4 font-normal text-white dark:text-gray-100"
                 >
-                  Senior
+                  Team
                 </label>
               </div>
-            </div> */}
+            </div>
             <div className=" h-[15%] w-full flex justify-center items-center">            
               <button
                 

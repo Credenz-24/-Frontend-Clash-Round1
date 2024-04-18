@@ -29,10 +29,10 @@ function App() {
   useEffect(() => {
     const handleKeyDown = (event) => {
       // Prevent opening the console with keyboard shortcuts
-      if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c') || (event.keyCode === 123) || event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+      // if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c') || (event.keyCode === 123) || event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
+      //   event.preventDefault();
+      //   event.stopPropagation();
+      // }
     };
 
     // Add event listener to intercept keyboard events

@@ -13,7 +13,7 @@ const Instruct = (props) => {
                     </div>
                 </div>
                 <div className="description w-[80%] h-[90%] bg-blue-300 rounded-full flex justify-center items-center px-[3vw]">
-                    <p>{description}</p>
+                    <p className="p-1 m-1">{description}</p>
                 </div>
             </div>
         </>

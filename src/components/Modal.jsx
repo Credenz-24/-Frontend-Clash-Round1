@@ -53,26 +53,29 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
   },[])
 
 
-  console.log("lifeline crnt type",type)
-
+  
   const handleConfirm = () => {
+    console.log("lifeline crnt type",type)
+    // console.log()
     switch (type) {
       case "skip":
         onSkipQuestion();
         break;
-      case "GPT":
-        console.log("helllllo")
-          onGPT();
 
-        
+      case "GPT":
+        console.log("helllllo gpt active")
+          onGPT();
         break;
+
       case "streak":
         onStreakLifeline();
         break;
+
       case "audiencePoll":
         onAudiencePoll();
         setActivated(true);
         return;
+
       default:
         console.error("Invalid lifeline type");
     }
