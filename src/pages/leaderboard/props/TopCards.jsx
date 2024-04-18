@@ -1,7 +1,42 @@
 const TopCards = ({name, rank, teamScore}) => {
     return ( 
         <>
-            <div className="card h-[130px] w-[310px] py-[px] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px]">
+        <style>
+            {`
+                @media only screen and (max-width: 468px) {
+                    .card{
+                        width:100%;
+                        height:100px;
+                        display:flex;
+                        flex-direction:column;
+                        justify:center;
+                        items:center;
+                        padding: 0 2vw;
+                        display:none;
+
+                    }
+                    .card .stat{
+                        display:none;
+                    }
+                }
+                @media only screen and (max-width: 760px) {
+                    
+                    .card{
+                        height:100px;
+                        width:200px;
+                    }
+
+                    .stat{
+                        display:none;
+                    }
+                    .user{
+                        height:100%;
+                    }
+                        
+                }
+            `}
+        </style>
+            <div className="card h-[200px] w-[350px] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px] ">
                 <div className="user h-[50%] w-full bg-yellow-30 flex justify-center items-center ">
                     <div className="trophy-image w-[30%] h-full bg-red- flex justify-center items-center">
                         <img src="../diver.png" alt="" className="h-[50px] w-[50px]" />

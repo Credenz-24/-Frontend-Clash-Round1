@@ -5,7 +5,7 @@ import UserContext from '../../context/UserContext';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import InstructionModal from './InstructionModal'
-function Navbar() {
+function Navbar({fullScreenToggle,setFullScreenToggle}) {
   const navigate = useNavigate();
   const location = useLocation();
   const [nav, setNav] = useState(true);
@@ -27,6 +27,7 @@ function Navbar() {
         console.log('logout', res);
         setUser(null);
         localStorage.removeItem('token');
+        setFullScreenToggle(true);
         navigate('/');
         toast.info("Logged Out!")
       })
@@ -65,7 +66,7 @@ function Navbar() {
         </>
       ) : (
       <>
-      {isInstructionRoute ? (null):(
+      {isInstructionRoute && isQuestionRoute ? (null):(
         <button onClick={handleInstructionsClick} className="px-[20px] py-[10px] text-center">
           Instructions
         </button>

@@ -7,7 +7,7 @@ import UserContext from '../../context/UserContext'
 import { toast } from "react-toastify";
 
 
-const Login = () => {
+const Login = ({fullScreenToggle,setFullScreenToggle}) => {
   const navigate = useNavigate();
   const [showLabelUser, setShowLabelUser] = useState(false);
   const [showLabelPass, setShowLabelPass] = useState(false);
@@ -22,20 +22,24 @@ const Login = () => {
 
   const enterFullScreen = () => {
     const element = rootElementRef.current;
-    if (element) {
+    if(!fullScreenToggle){
+
+      if (element) {
+
         if (element.requestFullscreen) {
-            element.requestFullscreen();
+          element.requestFullscreen();
         } else if (element.mozRequestFullScreen) { // Firefox
-            element.mozRequestFullScreen();
+          element.mozRequestFullScreen();
         } else if (element.webkitRequestFullscreen) { // Chrome, Safari, and Opera
-            element.webkitRequestFullscreen();
+          element.webkitRequestFullscreen();
         } else if (element.msRequestFullscreen) { // Edge
-            element.msRequestFullscreen();
+          element.msRequestFullscreen();
+        } else {
+          console.error("Fullscreen API not supported by this browser.");
         }
-    } else {
-        console.error("The element to enter full-screen mode is not found.");
+      }
     }
-};
+  };
 
   const handleInputFocus2 = () => {
    // setShowUnderline(true); // Show the underline when input is focused
@@ -123,11 +127,15 @@ const Login = () => {
   
     axios.post('https://api.clash.credenz.in/core/login/', loginData)
       .then((res) => {
+        console.log("res" , res);
         console.log("token",res.data.token);
+        
   
         localStorage.setItem('token', res.data.token);
         console.log(res.data.jwt);
         if(res.data.token){
+          setFullScreenToggle(false);
+          enterFullScreen();
           navigate("/instruction");
         }
         else{
@@ -151,10 +159,10 @@ const Login = () => {
         setUser(loginData);
       })
       .catch((err) => {
-        console.log("errror",err.response ? err.response.data.detail : err.message);
+        console.log("errror",err.response);
         // Dismiss loading toast if login fails
         toast.dismiss(loadingToastId);
-        toast.error(err.message);
+        toast.error(err.response.data.message);
       });
   };
 
@@ -162,6 +170,65 @@ const Login = () => {
     
     
     <>
+    <style>
+      {
+        `
+        @media only screen and (max-width: 468px)
+        {
+          .container{
+            height:100%;
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            gap:20px
+          }
+          .name{
+            left:17%;
+          }
+          .image{
+            height:5%;
+            width:100%;
+            display:flex;
+            flex-direction:column;
+          }
+          .clash{
+            display:none;
+            // height:100px;
+          }
+          .logo{
+            margin-top:10px;
+
+            height:200px;
+            width:200px;
+            z-index:100; 
+          }
+          .clash-logo{
+            margin-top:10px;
+            height:200px;
+            width:200px;
+            z-index:100;
+          }
+          .right-box{
+            height:70%;
+            width:85%;
+          }
+          .login-box{
+            height:100%;
+            width:100%;
+          }
+          .login-btn{
+            margin-bottom:70px;
+          }
+        }
+        @media only screen and (min-width: 600px){
+          .clash-logo{
+            display:none;
+          }
+        }
+        
+        `
+      }
+    </style>
     <div ref={rootElementRef}
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
     className="h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
@@ -181,7 +248,7 @@ const Login = () => {
         
         <img src="../Credenz_logo.png" alt=""  className="h-[60px] w-[60px] absolute top-[4%] left-[3%]" />
         <h1 className="text-[20px] text-white font-bold absolute top-[6.3%] left-[6.7%]">Credenz</h1>
-        <img src="../clash.png" alt=""  className="h-80 w-80" />
+        <img src="../clash.svg" alt=""  className="h-80 w-80" />
 
 
         

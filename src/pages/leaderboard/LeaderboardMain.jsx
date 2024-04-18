@@ -56,11 +56,65 @@ function Leaderboard() {
 
     return (
       <>
-        <div className="container h-[86.4vh] w-[100%] bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
+      <style>
+            {`
+                @media only screen and (max-width: 468px) {
+                    .container{
+                        width:100%;
+                        height:620px;
+                        overflow-x:hidden;
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                        padding: 2vw 2vw;
+                    }
+                    .buttons{
+                        position:absolute;
+                        bottom:5%;
+                    }
+                }
+                @media only screen and (min-width: 500px) {
+                    .container{
+                        width:100%;
+                        height:86.7vh;
+                        overflow-x:hidden;
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                        padding: 2vw 2vw;
+                    }
+                }
+                @media only screen and (min-width: 2000px) {
+                    .container{
+                        width:100%;
+                        height:100%;
+                        overflow-x:hidden;
+                        display:flex;
+                        flex-direction:column;
+                        justify-content:center;
+                        align-items:center;
+                        padding: 2vw 2vw;
+                    }
+                }
+                @media only screen and (max-height: 700px) {
+                    .container{
+                        width:100%;
+                        height:580px;
+                        overflow-x:hidden;
+                        display:flex;
+                        flex-direction:column;
+                        justify-content:center;
+                        align-items:center;
+                        padding: 2vw 2vw;
+                    }
+                }
+            `}
+        </style>
+        <div className="container h-[86.4vh] w-full bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
             {(currentStep=== 0) ? (
                 <>
                     <Junior leadJunior={juniorLeaderboard}/>
-                    <div className="buttons h-[10%] w-full bg-orange- flex justify-center items-start gap-[50px]">
+                    <div className="buttons absolute bottom-[3%] w-full bg-orange- flex justify-center items-center gap-[50px]">
                         <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handleNext}>
                             SENIORS
                         </button>
@@ -72,7 +126,7 @@ function Leaderboard() {
             {(currentStep=== 1) ? (
                 <>
                     <Senior leadSenior={seniorLeaderboard}/>
-                    <div className="buttons h-[10%] w-full bg-orange-60 flex justify-center items-center gap-[50px]">
+                    <div className="buttons absolute bottom-[3%] w-full bg-orange-60 flex justify-center items-center gap-[50px]">
                         <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handlePrev}>
                             JUNIORS
                         </button>

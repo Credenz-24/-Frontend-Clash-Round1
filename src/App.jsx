@@ -48,17 +48,18 @@ function App() {
   const {currentUser}  = useContext(UserContext);
   // console.log("roter" , path);
   // const login = () => path==="/";
+  const [fullScreenToggle,setFullScreenToggle] = useState(false)
 
   return (
     
     <>
         
       <div className='main h-screen'>
-    <Navbar/>
-    <DisableNavigation>
-    <DisableClipboard>
+      <Navbar fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>
+    {/* <DisableNavigation> */}
+    {/* <DisableClipboard> */}
    <Routes>
-      <Route path="/" element={<Login />} />
+   <Route path="/" element={<Login fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>} />
       <Route path="instruction" element={<InstructionMain />} />
       <Route path="leaderboard" element={<LeaderboardMain/>} />
       <Route element={<PrivateRoute />} >
@@ -72,8 +73,8 @@ function App() {
 
       
       </Routes>
-      </DisableClipboard>
-      </DisableNavigation>
+      {/* </DisableClipboard> */}
+      {/* </DisableNavigation> */}
       </div>
 
       

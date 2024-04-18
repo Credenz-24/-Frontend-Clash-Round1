@@ -47,61 +47,95 @@ export default function Questions() {
   const apiUrl = 'https://api.clash.credenz.in/core/tab_switch/';
 
   //Tab_Switching 
-  //const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
-  // const handleEvent = async (eventType) => {
-  //     try {
-  //         const token = localStorage.getItem('token');
-  //         const response = await axios.post(apiUrl, {
-  //             bool: eventType === 'tabSwitch'
-  //         }, {
-  //             headers: {
-  //                 Authorization: `${token}`,
-  //             }
-  //         });
-  //         if (response.status === 200) {
-  //             const { message, count } = response.data;
-  //             console.log('API response:', message, count);
-  //             setTabSwitchCount(count);
-  //             if (count > 3) {
-  //               navigate("/result")
-  //               toast.error('Your test has been auto-submitted due to excessive tab switching.');
-  //           }
-  //             else if (count > 0) {
-  //                 toast.warning(`Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`);
-  //             }
-  //         } else if (response.status === 307) {
-  //             const { message } = response.data;
-  //             if (message === 'time over') {
-  //                 toast.error('Time is over. Your test has been submitted.');
-  //             } else if (message === 'submitted') {
-  //                 toast.error('Your test has been auto-submitted due to excessive tab switching.');
-  //             }
-  //         }
-  //     } catch (error) {
-  //         console.error('Error handling event:', error);
-  //         handleSubmit()
-  //         toast.error('An error occurred. Please try again.');
-  //     }
-  // };
-  // useEffect(() => {
-  //     const handleFullscreenChange = () => {
-  //         if (!document.fullscreenElement) {
-  //             handleEvent('fullscreenExit');
-  //         }
-  //     };
-  //     document.addEventListener('fullscreenchange', handleFullscreenChange);
-  //     const handleVisibilityChange = () => {
-  //         if (document.visibilityState === 'hidden') {
-  //             handleEvent('tabSwitch');
-  //         }
-  //     };
-  //     document.addEventListener('visibilitychange', handleVisibilityChange);
-  //     return () => {
-  //         document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  //         document.removeEventListener('visibilitychange', handleVisibilityChange);
-  //     };
-  // }, []);
+  const handleEvent = async (eventType) => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+            apiUrl,
+            {
+                bool: eventType === "tabSwitch" || eventType === "splitScreen",
+            },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        if (response.status === 200) {
+            const { message, count } = response.data;
+            console.log("API response:", message, count);
+            setTabSwitchCount(count);
+            if (count > 3) {
+                navigate("/result");
+                toast.error(
+                    "Your test has been auto-submitted due to excessive tab switching."
+                );
+            } else if (count > 0) {
+                toast.warning(
+                    `Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`
+                );
+            }
+        } else if (response.status === 307) {
+            const { message } = response.data;
+            if (message === "time over") {
+                toast.error("Time is over. Your test has been submitted.");
+            } else if (message === "submitted") {
+                toast.error(
+                    "Your test has been auto-submitted due to excessive tab switching."
+                );
+            }
+        }
+    } catch (error) {
+        console.error("Error handling event:", error);
+        navigate("/result");
+        toast.error("An error occurred. Please try again.");
+    }
+};
+
+// Function to handle resize events and detect split-screen
+const handleResize = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Define your criteria for considering the window to be split-screened
+    const isSplitScreen = width < screen.width / 2 || height < screen.height / 2;
+
+    if (isSplitScreen) {
+        handleEvent("splitScreen");
+    }
+};
+
+useEffect(() => {
+    // Handle fullscreen and visibility change events
+    const handleFullscreenChange = () => {
+        if (!document.fullscreenElement) {
+            handleEvent("fullscreenExit");
+        }
+    };
+
+    const handleVisibilityChange = () => {
+        if (document.visibilityState === "hidden") {
+            handleEvent("tabSwitch");
+        }
+    };
+
+    // Add event listeners for fullscreen and visibility change
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Add resize event listener for split-screen detection
+    window.addEventListener("resize", handleResize);
+
+    // Clean up event listeners when component unmounts
+    return () => {
+        document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        window.removeEventListener("resize", handleResize);
+    };
+}, []);
+
 
 
 
