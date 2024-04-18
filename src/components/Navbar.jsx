@@ -20,7 +20,7 @@ function Navbar() {
   };
   const handleLogout = () => {
     axios
-      .get('https://api.clash.credenz.in/logout/', {
+      .get('https://api.clash.credenz.in/core/logout/', {
         headers: { Authorization: `${localStorage.getItem('token')}` }
       })
       .then((res) => {

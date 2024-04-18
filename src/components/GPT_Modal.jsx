@@ -38,7 +38,7 @@ export default function GPT_Modal({
     e.preventDefault();
     axios
       .post(
-        "https://api.clash.credenz.in/gpt/",
+        "https://api.clash.credenz.in/core/gpt/",
         { message: prompt },
         {
           headers: {

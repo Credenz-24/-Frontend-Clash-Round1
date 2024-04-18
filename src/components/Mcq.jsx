@@ -44,7 +44,7 @@ export default function Questions() {
   const [min, setMin] = useState(0);
 
   const navigate = useNavigate();
-  const apiUrl = 'https://api.clash.credenz.in/tab_switch/';
+  const apiUrl = 'https://api.clash.credenz.in/core/tab_switch/';
 
   //Tab_Switching 
   //const [tabSwitchCount, setTabSwitchCount] = useState(0);
@@ -130,7 +130,7 @@ export default function Questions() {
 
   const fetchTimerValue = async () => {
     try {
-      const response = await axios.get("https://api.clash.credenz.in/current_question/", {
+      const response = await axios.get("https://api.clash.credenz.in/core/current_question/", {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       //console.log(token);
@@ -180,7 +180,7 @@ export default function Questions() {
   const fetchLifelines = async () => {
     try {
       const response = await axios.get(
-        "https://api.clash.credenz.in/all_lifelines/",
+        "https://api.clash.credenz.in/core/all_lifelines/",
         {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         }
@@ -199,7 +199,7 @@ export default function Questions() {
   const fetchQuestion = async () => {
     try {
       const response = await axios.get(
-        "https://api.clash.credenz.in/current_question/",
+        "https://api.clash.credenz.in/core/current_question/",
         {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         }
@@ -226,7 +226,7 @@ export default function Questions() {
 
     // const loadingToastId = toast.loading("Loading Next Questions!");
     axios
-      .post("https://api.clash.credenz.in/submit/", selectedOptionData, {
+      .post("https://api.clash.credenz.in/core/submit/", selectedOptionData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((res) => {
@@ -258,7 +258,7 @@ export default function Questions() {
     setShowModal(true);
     try {
       axios
-        .get("https://api.clash.credenz.in/skip_question/", {
+        .get("https://api.clash.credenz.in/core/skip_question/", {
           headers: { Authorization:`${localStorage.getItem("token")}` },
         })
         .then((response) => {
@@ -297,7 +297,7 @@ export default function Questions() {
       console.log("Using gpt")
         axios
         .get(
-          "https://api.clash.credenz.in/gpt/",
+          "https://api.clash.credenz.in/core/gpt/",
           // { message: dataGPT },
           {
             headers: { Authorization:`${localStorage.getItem("token")}` },
@@ -377,7 +377,7 @@ export default function Questions() {
     // const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
-        .get("https://api.clash.credenz.in/streak_lifeline/", {
+        .get("https://api.clash.credenz.in/core/streak_lifeline/", {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         })
         .then((response) => {
@@ -408,7 +408,7 @@ export default function Questions() {
     const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
-        .get("https://api.clash.credenz.in/audiance_poll/", {
+        .get("https://api.clash.credenz.in/core/audiance_poll/", {
           headers: { Authorization: ` ${localStorage.getItem("token")}` },
         })
         .then((response) => {

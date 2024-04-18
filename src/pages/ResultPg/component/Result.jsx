@@ -12,7 +12,7 @@ const Home = () => {
   const getMyPostData =async()=>{
   try {
     axios
-      .get("https://api.clash.credenz.in/result_page/", {
+      .get("https://api.clash.credenz.in/core/result_page/", {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((response) => {

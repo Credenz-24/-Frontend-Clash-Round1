@@ -73,7 +73,7 @@ const Login = () => {
 
   const handleLoginTypeChange = (event) => {
     setLoginType(event.target.value);
-    if(event.target.value === "Team"){
+    if(event.target.value === "team"){
       setIsTeam(true);
     }
     else{
@@ -117,11 +117,11 @@ const Login = () => {
       password: password,
       is_team: isTeam,
     };
-  
+    console.log("lgn" , loginData);
     // Display loading toast
     const loadingToastId = toast.loading("Logging in...");
   
-    axios.post('https://api.clash.credenz.in/login/', loginData)
+    axios.post('https://api.clash.credenz.in/core/login/', loginData)
       .then((res) => {
         console.log("token",res.data.token);
   
