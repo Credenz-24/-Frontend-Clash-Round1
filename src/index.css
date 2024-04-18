@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 
-@font-face {
+/* @font-face {
     font-family: 'Azonix';
     src: url('./fonts/azonix.ttf') format('truetype');
-  }
+  } */
   
   h1{
     font-family: 'Azonix';

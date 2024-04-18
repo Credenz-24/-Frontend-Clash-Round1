@@ -44,7 +44,7 @@ export default function Questions() {
   const [min, setMin] = useState(0);
 
   const navigate = useNavigate();
-  const apiUrl = 'http://127.0.0.1:8000/core/tab_switch/';
+  const apiUrl = 'https://api.clash.credenz.in/tab_switch/';
 
   //Tab_Switching 
   //const [tabSwitchCount, setTabSwitchCount] = useState(0);
@@ -130,7 +130,7 @@ export default function Questions() {
 
   const fetchTimerValue = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/core/current_question/", {
+      const response = await axios.get("https://api.clash.credenz.in/current_question/", {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       //console.log(token);
@@ -180,7 +180,7 @@ export default function Questions() {
   const fetchLifelines = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/core/all_lifelines/",
+        "https://api.clash.credenz.in/all_lifelines/",
         {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         }
@@ -199,7 +199,7 @@ export default function Questions() {
   const fetchQuestion = async () => {
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/core/current_question/",
+        "https://api.clash.credenz.in/current_question/",
         {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         }
@@ -226,7 +226,7 @@ export default function Questions() {
 
     // const loadingToastId = toast.loading("Loading Next Questions!");
     axios
-      .post("http://127.0.0.1:8000/core/submit/", selectedOptionData, {
+      .post("https://api.clash.credenz.in/submit/", selectedOptionData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((res) => {
@@ -258,7 +258,7 @@ export default function Questions() {
     setShowModal(true);
     try {
       axios
-        .get("http://127.0.0.1:8000/core/skip_question/", {
+        .get("https://api.clash.credenz.in/skip_question/", {
           headers: { Authorization:`${localStorage.getItem("token")}` },
         })
         .then((response) => {
@@ -297,7 +297,7 @@ export default function Questions() {
       console.log("Using gpt")
         axios
         .get(
-          "http://127.0.0.1:8000/core/gpt/",
+          "https://api.clash.credenz.in/gpt/",
           // { message: dataGPT },
           {
             headers: { Authorization:`${localStorage.getItem("token")}` },
@@ -377,7 +377,7 @@ export default function Questions() {
     // const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
-        .get("http://127.0.0.1:8000/core/streak_lifeline/", {
+        .get("https://api.clash.credenz.in/streak_lifeline/", {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         })
         .then((response) => {
@@ -408,7 +408,7 @@ export default function Questions() {
     const loadingToastId = toast.loading("Please Wait!");
     try {
       axios
-        .get("http://127.0.0.1:8000/core/audiance_poll/", {
+        .get("https://api.clash.credenz.in/audiance_poll/", {
           headers: { Authorization: ` ${localStorage.getItem("token")}` },
         })
         .then((response) => {
@@ -454,7 +454,11 @@ export default function Questions() {
   return (
     <>
       <div className="mt-2">
-      <div className="text-white bg-green- flex flex-row relative"><span className="border border-[#0075FF] rounded-lg p-4 mb-2">Timer: {formatTime(timer)} minutes</span></div>
+      <div className="text-white bg-green- flex flex-row justify-between relative">
+  <span className="border border-[#0075FF] rounded-lg p-4 mb-2 font-bold text-lg">Q {myData.question_level}</span>
+  <span className="border border-[#0075FF] rounded-lg p-4 mb-2">Timer: {formatTime(timer)} minutes</span>
+</div>
+
         {myData.question_data && (
           <div className="h-[40vh] w-[50vw] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
             <div className="text-xl font-bold overflow-y-auto text-slate-100 w-full scrollbar-thin scrollbar-webkit">
@@ -664,12 +668,14 @@ export default function Questions() {
           {/* {handleStreak && showStreakLifelinedata && <div className="text-white h-auto m-10">Encode the data!<p>{streakLifelineData.Encoded_data.encoded_data}</p><p>{streakLifelineData.Encoded_data.from_to}</p></div>} */}
           {showGPTModal && (
             <GPT_Modal
+              
               onClose={closeGPTModal}
               inputValue={dataGPT}
               onChange={gptData}
               onConfirm={handleGPT}
-              response={botResponse}
+              // response={botResponse}
               question={myData.question_data.question_md}
+              in_use = {fetchLifeline?.in_use?.gpt}
             />
           )}
     

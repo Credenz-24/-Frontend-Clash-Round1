@@ -22,7 +22,7 @@ export default function Battery({streak}) {
           </div>
 
           <div  >
-            <BatteryGauge value={streak>4 ? 4 :streak}  size={70} maxValue={8} formatValue={() => streak<4 ? streak : streak  } customization={{
+            <BatteryGauge value={streak>4 ? 4 :streak}  size={70} maxValue={4} formatValue={() => streak<4 ? streak : streak  } customization={{
                 batteryBody: {
                           strokeWidth: 4,
                           cornerRadius: 6,

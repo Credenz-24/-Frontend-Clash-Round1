@@ -34,7 +34,7 @@ function Leaderboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/core/leaderboard/', {
+                const response = await axios.get('https://api.clash.credenz.in/leaderboard/', {
                     headers: {"Authorization": localStorage.getItem('jwt')}
                 });
                 // Separate junior and senior lists

@@ -121,7 +121,7 @@ const Login = () => {
     // Display loading toast
     const loadingToastId = toast.loading("Logging in...");
   
-    axios.post('http://127.0.0.1:8000/core/login/', loginData)
+    axios.post('https://api.clash.credenz.in/login/', loginData)
       .then((res) => {
         console.log("token",res.data.token);
   

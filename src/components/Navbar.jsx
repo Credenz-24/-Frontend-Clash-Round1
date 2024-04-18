@@ -20,7 +20,7 @@ function Navbar() {
   };
   const handleLogout = () => {
     axios
-      .get('http://localhost:8000/core/logout/', {
+      .get('https://api.clash.credenz.in/logout/', {
         headers: { Authorization: `${localStorage.getItem('token')}` }
       })
       .then((res) => {
@@ -76,12 +76,20 @@ function Navbar() {
           Leaderboards
         </Link>
     )}
-        <a
-          onClick={() => handleLogout()}
-          className="px-[20px] py-[10px] text-center cursor-pointer"
-        >
-          Logout
-        </a>
+    {/* {console.log(localStorage.getItem('token') !== undefined)} */}
+    {localStorage.getItem('token') ? (
+              <a
+              onClick={() => handleLogout()}
+              className="px-[20px] py-[10px] text-center cursor-pointer"
+            >
+              Logout
+            </a>
+    ) : (
+      <Link to="/" className="px-[20px] py-[10px] text-center">
+      Login
+    </Link>
+    )}
+
       </>
       ) // Conditional background color
       }
