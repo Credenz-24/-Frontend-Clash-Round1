@@ -183,7 +183,7 @@ const InstructionMain = (props) => {
                                 );
                             })}
                             </div> */}
-                            <div className="instru max-h-[100%] w-full bg-red- overflow-y-auto no-scrollbar flex justify-center items-center gap-[3vh] flex-wrap">
+                            <div className="instru max-h-[100%] w-full bg-red- overflow-y-scroll no-scrollbar flex justify-center items-center gap-[3vh] flex-wrap">
                                 <div className="title h-[16%] bg-gradient-to-b from-[#002251] to-[#001E45] w-full flex justify-center items-center sticky top-0">
                                     <h1 className=" texting text-[40px]  text-white opacity-[100%]">INSTRUCTIONS</h1>
                                 </div>

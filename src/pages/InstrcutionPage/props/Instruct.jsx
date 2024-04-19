@@ -47,13 +47,13 @@ const Instruct = (props) => {
         }
         `}
         </style>
-            <div className="instruct1 h-auto w-full bg-yellow-20 flex justify-center items-center  ">
+            <div className="instruct1 h-auto overflow-y-scroll w-full bg-yellow-20 flex justify-center items-center  ">
                 <div className="nums w-[10%] h-full bg-red-90 flex justify-center items-center">
                     <div className="number w-[80px] h-[80px] bg-blue-500 rounded-full flex justify-center items-center" >
                         <h1 className="text-[25px] text-white">{number}</h1>
                     </div>
                 </div>
-                <div className="description w-[80%] h-[100%] bg-blue-300 rounded-full no-scrollbar overflow-hidden overflow-y-scroll flex justify-center items-center px-[3vw] py-[15px]">
+                <div className="description w-[80%] h-[100%] bg-blue-300 rounded-[27px] mx-[28px] no-scrollbar overflow-hidden overflow-y-scroll flex justify-center items-center px-[3vw] py-[15px]">
                     <p className=" desc flex justify-center items-center text-[15px] font-regular">{description}</p>
                 </div>
             </div>

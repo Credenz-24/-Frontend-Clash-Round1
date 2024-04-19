@@ -26,3 +26,23 @@
     background: linear-gradient(0deg, rgb(0, 23, 42) 50%, rgb(0, 41, 107) 100%);
     user-select: none;
   }
+
+  /* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #070235;
+}

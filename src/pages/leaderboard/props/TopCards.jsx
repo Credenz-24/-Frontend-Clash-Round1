@@ -12,11 +12,11 @@ const TopCards = ({name, rank, teamScore}) => {
                         justify:center;
                         items:center;
                         padding: 0 2vw;
-                        display:none;
+                        
 
                     }
                     .card .stat{
-                        display:none;
+                        // display:none;
                     }
                 }
                 @media only screen and (max-width: 760px) {
@@ -36,7 +36,7 @@ const TopCards = ({name, rank, teamScore}) => {
                 }
             `}
         </style>
-            <div className="card h-[200px] w-[350px] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px] ">
+            <div className="card h-[fit-content] py-2 md:w-[350px] !w-[inherit] bg-blue-00 bg-[#0b143e] border-[2px] border-solid border-blue-500 rounded-[20px] flex flex-col justify-center items-center backdrop-blur-[30px] ">
                 <div className="user h-[50%] w-full bg-yellow-30 flex justify-center items-center ">
                     <div className="trophy-image w-[30%] h-full bg-red- flex justify-center items-center">
                         <img src="../diver.png" alt="" className="h-[50px] w-[50px]" />

@@ -17,7 +17,7 @@ const Junior = ({leadJunior}) => {
     return ( 
         <>
             <div className="Team h-[90%] w-full flex flex-col justify-center items-center bg-red-4 ">
-                <div className="top-3-juniors h-[20%] w-full bg-purple-40 flex justify-center items-center gap-[6vw] ">
+                <div className="top-3-juniors mb-2 md:flex-row flex-col md:h-[20%] h-[max-content] md:w-full w-[90%] bg-purple-40 flex justify-center items-center gap-[6vw] ">
                 {
                     leadJunior.filter((items, index) => (index < 3))
                         .map((item) => (

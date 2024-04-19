@@ -66,7 +66,7 @@ function App() {
     
     <>
         
-      <div className='main h-screen'>
+      <div className='main h-auto md:h-screen'>
       <Navbar fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>
     {/* <DisableNavigation> */}
     {/* <DisableClipboard> */}

@@ -4,8 +4,8 @@ import Questions from '../components/Mcq';
 
 const QuestionMcq = () => {
   return (
-    <div className="flex ml-[7%]">
-      <div className='flex'>
+    <div className="flex mx-auto h-auto overflow-y-scroll">
+      <div className='flex md:flex-row flex-col w-[100%]'>
         <Questions />
       </div>
     </div>

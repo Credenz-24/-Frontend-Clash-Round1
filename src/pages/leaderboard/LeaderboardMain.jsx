@@ -69,8 +69,8 @@ function Leaderboard() {
                         padding: 2vw 2vw;
                     }
                     .buttons{
-                        position:absolute;
-                        bottom:5%;
+                        position:relative;
+                        margin: 14px auto;
                     }
                 }
                 @media only screen and (min-width: 500px) {
@@ -110,12 +110,12 @@ function Leaderboard() {
                 }
             `}
         </style>
-        <div className="container h-[86.4vh] w-full bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
+        <div className="costainer md:h-[86.4vh] h-[max-content]  w-full bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
             {(currentStep=== 0) ? (
                 <>
                     <Junior leadJunior={juniorLeaderboard}/>
                     <div className="buttons absolute bottom-[3%] w-full bg-orange- flex justify-center items-center gap-[50px]">
-                        <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handleNext}>
+                        <button className="btPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handleNext}>
                             SENIORS
                         </button>
                     </div>
@@ -130,7 +130,7 @@ function Leaderboard() {
                         <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handlePrev}>
                             JUNIORS
                         </button>
-                       <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 ">
+                       <button className="btPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 ">
                             Proceed
                         </button>
                     </div>

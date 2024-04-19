@@ -45,81 +45,82 @@ export default function Questions() {
 
   const navigate = useNavigate();
 
-  const apiUrl = 'https://api.clash.credenz.in/core/tab_switch/';
+  const apiUrl = "https://api.clash.credenz.in/core/tab_switch/";
 
-  //Tab_Switching 
+  //Tab_Switching
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
   const handleEvent = async (eventType) => {
-    try {
-        const token = localStorage.getItem("token");
-        const response = await axios.post(
-            apiUrl,
-            {
-                bool: eventType === "tabSwitch" || eventType === "splitScreen",
-            },
-            {
-                headers: {
-                    Authorization: `${token}`,
-                },
-            }
-        );
-        if (response.status === 200) {
-            const { message, count } = response.data;
-            // console.log("API response:", message, count);
-            setTabSwitchCount(count);
-            if (count > 3) {
-                navigate("/result");
-                toast.error(
-                    "Your test has been auto-submitted due to excessive tab switching."
-                );
-            } else if (count > 0) {
-                toast.warning(
-                    `Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`
-                );
-            }
-        } else if (response.status === 307) {
-            const { message } = response.data;
-            if (message === "time over") {
-                toast.error("Time is over. Your test has been submitted.");
-            } else if (message === "submitted") {
-                toast.error(
-                    "Your test has been auto-submitted due to excessive tab switching."
-                );
-            }
-        }
-    } catch (error) {
-        // console.error("Error handling event:", error);
-        navigate("/result");
-        toast.error("An error occurred. Please try again.");
-    }
-};
+    // try {
+    //     const token = localStorage.getItem("token");
+    //     const response = await axios.post(
+    //         apiUrl,
+    //         {
+    //             bool: eventType === "tabSwitch" || eventType === "splitScreen",
+    //         },
+    //         {
+    //             headers: {
+    //                 Authorization: `${token}`,
+    //             },
+    //         }
+    //     );
+    //     if (response.status === 200) {
+    //         const { message, count } = response.data;
+    //         // console.log("API response:", message, count);
+    //         setTabSwitchCount(count);
+    //         if (count > 3) {
+    //             navigate("/result");
+    //             toast.error(
+    //                 "Your test has been auto-submitted due to excessive tab switching."
+    //             );
+    //         } else if (count > 0) {
+    //             toast.warning(
+    //                 `Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`
+    //             );
+    //         }
+    //     } else if (response.status === 307) {
+    //         const { message } = response.data;
+    //         if (message === "time over") {
+    //             toast.error("Time is over. Your test has been submitted.");
+    //         } else if (message === "submitted") {
+    //             toast.error(
+    //                 "Your test has been auto-submitted due to excessive tab switching."
+    //             );
+    //         }
+    //     }
+    // } catch (error) {
+    //     // console.error("Error handling event:", error);
+    //     navigate("/result");
+    //     toast.error("An error occurred. Please try again.");
+    // }
+  };
 
-// Function to handle resize events and detect split-screen
-const handleResize = () => {
+  // Function to handle resize events and detect split-screen
+  const handleResize = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
     // Define your criteria for considering the window to be split-screened
-    const isSplitScreen = width < screen.width / 2 || height < screen.height / 2;
+    const isSplitScreen =
+      width < screen.width / 2 || height < screen.height / 2;
 
     if (isSplitScreen) {
-        handleEvent("splitScreen");
+      handleEvent("splitScreen");
     }
-};
+  };
 
-useEffect(() => {
+  useEffect(() => {
     // Handle fullscreen and visibility change events
     const handleFullscreenChange = () => {
-        if (!document.fullscreenElement) {
-            handleEvent("fullscreenExit");
-        }
+      if (!document.fullscreenElement) {
+        handleEvent("fullscreenExit");
+      }
     };
 
     const handleVisibilityChange = () => {
-        if (document.visibilityState === "hidden") {
-            handleEvent("tabSwitch");
-        }
+      if (document.visibilityState === "hidden") {
+        handleEvent("tabSwitch");
+      }
     };
 
     // Add event listeners for fullscreen and visibility change
@@ -131,14 +132,11 @@ useEffect(() => {
 
     // Clean up event listeners when component unmounts
     return () => {
-        document.removeEventListener("fullscreenchange", handleFullscreenChange);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
-        window.removeEventListener("resize", handleResize);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("resize", handleResize);
     };
-}, []);
-
-
-
+  }, []);
 
   const handleOptionSelect = (option) => {
     setSelectedOption((prevOption) => (prevOption === option ? "" : option));
@@ -165,22 +163,25 @@ useEffect(() => {
 
   const fetchTimerValue = async () => {
     try {
-      const response = await axios.get("https://api.clash.credenz.in/core/current_question/", {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-      });
+      const response = await axios.get(
+        "https://api.clash.credenz.in/core/current_question/",
+        {
+          headers: { Authorization: `${localStorage.getItem("token")}` },
+        }
+      );
       //console.log(token);
       setTimer(response.data.time_remaining);
       // console.log("timer",response.data.time_remaining);
     } catch (error) {
       if (error.response && error.response.status === 307) {
-         //navigate('/result');
+        //navigate('/result');
       } else {
         // console.error("Error fetching timer value:", error);
       }
     }
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchQuestion();
     fetchLifelines();
     setNextQuestion(false);
@@ -199,18 +200,15 @@ useEffect(() => {
         setTimer(timer - 1);
       } else {
         clearInterval(timerInterval);
-         navigate('/result');
+        navigate("/result");
       }
     }, 1000);
     return () => clearInterval(timerInterval);
   }, [timer]);
 
-
   useEffect(() => {
     fetchLifelines();
-  },[fetchLifeline?.available?.skip]);
-
- 
+  }, [fetchLifeline?.available?.skip]);
 
   const fetchLifelines = async () => {
     try {
@@ -220,7 +218,7 @@ useEffect(() => {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         }
       );
-      
+
       setFetchLifeline(response.data);
       setIsError(false);
       // console.log("All lifelines",response.data);
@@ -253,7 +251,7 @@ useEffect(() => {
 
   //Submit a question to submit/
   const handleSubmit = () => {
-    if(selectedOption === ""){
+    if (selectedOption === "") {
       toast.error("Choose an Option!");
       return;
     }
@@ -274,14 +272,13 @@ useEffect(() => {
         setdataGPT("");
         setShowStreakLifelinedata(false);
         setBotResponse("");
-
       })
       .catch((error) => {
         // console.log("res handlesubmit:", error.response.status,typeof(error.response.status));
-        if(error.response.status === 307 || error.response.status === 500){
+        if (error.response.status === 307 || error.response.status === 500) {
           // toast.dismiss(loadingToastId);
-          navigate('/result');
-          toast.info("Round Ended!")
+          navigate("/result");
+          toast.info("Round Ended!");
         }
         // console.error("Error submitting option:", error);
         toast.error(error);
@@ -294,7 +291,7 @@ useEffect(() => {
     try {
       axios
         .get("https://api.clash.credenz.in/core/skip_question/", {
-          headers: { Authorization:`${localStorage.getItem("token")}` },
+          headers: { Authorization: `${localStorage.getItem("token")}` },
         })
         .then((response) => {
           // console.log("Question skipped successfully");
@@ -327,15 +324,15 @@ useEffect(() => {
 
     // console.log("shmdl" , showModal);
     // console.log(fetchLifeline.in_use.gpt,"Lifeline msg")
- 
-    if(fetchLifeline?.in_use.gpt){
-      console.log("Using gpt")
-        axios
+
+    if (fetchLifeline?.in_use.gpt) {
+      console.log("Using gpt");
+      axios
         .get(
           "https://api.clash.credenz.in/core/gpt/",
           // { message: dataGPT },
           {
-            headers: { Authorization:`${localStorage.getItem("token")}` },
+            headers: { Authorization: `${localStorage.getItem("token")}` },
           }
         )
         .then((response) => {
@@ -403,7 +400,6 @@ useEffect(() => {
     //       toast.dismiss(loadingToastId);
     //     });
     // }
-    
   };
 
   //Use streak lifeline from /streak_lifeline
@@ -489,31 +485,34 @@ useEffect(() => {
   return (
     <>
       <div className="mt-2">
-      <div className="text-white bg-green- flex flex-row justify-between relative">
-  <span className="border border-[#0075FF] rounded-lg p-4 mb-2 font-bold text-lg">Q {myData.question_level+1}</span>
-  <span className="border border-[#0075FF] rounded-lg p-4 mb-2">Timer: {formatTime(timer)} minutes</span>
-</div>
+        <div className="text-white bg-green- flex flex-row justify-between relative">
+          <span className="border border-[#0075FF] rounded-lg p-4 mb-2 font-bold text-lg">
+            Q {myData.question_level + 1}
+          </span>
+          <span className="border border-[#0075FF] rounded-lg p-4 mb-2">
+            Timer: {formatTime(timer)} minutes
+          </span>
+        </div>
 
         {myData.question_data && (
-          <div className="h-[40vh] w-[50vw] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
+          <div className="h-[40vh] w-[100%] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
             <div className="text-xl font-bold overflow-y-auto text-slate-100 w-full scrollbar-thin scrollbar-webkit">
               <span className="font-bold text-xl"></span>
               <pre
-              className=""
+                className=""
                 style={{
-                  whiteSpace: 'pre-wrap',
+                  whiteSpace: "pre-wrap",
                   scrollbarColor: "gray black",
                   WebkitScrollbar: { width: "10px", backgroundColor: "black" },
-                  scrollbarWidth: "thin"
+                  scrollbarWidth: "thin",
                 }}
-                >
-                  {myData.question_data.question_md}
+              >
+                {myData.question_data.question_md}
               </pre>
-              
             </div>
           </div>
         )}
-        <div className="grid grid-cols-2 grid-rows-2 gap-4 mt-10 w-[50vw] ">
+        <div className="md:grid md:grid-cols-2 md:grid-rows-2 flex flex-col mx-auto w-[90%] gap-4 mt-10 md:w-[50vw] ">
           {myData.question_data && (
             <>
               <button
@@ -572,13 +571,15 @@ useEffect(() => {
           )}
         </div>
         {/* <Graph/> */}
-        <div className="align-middle justify-center relative flex mt-6
-        ">
+        <div
+          className="align-middle justify-center relative flex mt-6
+        "
+        >
           <button
             type="button"
             // disabled={!selectedOption}
             //className="py-2.5 px-5 me-2 mb-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-             className="text-black font-bold uppercase transition-all duration-[0.3s] relative overflow-hidden z-[1] px-5 py-3 rounded-[10rem] after:content-[''] after:absolute after:w-full after:h-full after:bg-[#0075FF] after:z-[-2] after:rounded-[10rem] after:left-0 after:bottom-0 before:content-[''] before:absolute before:w-[0%] before:h-full before:bg-[#08a] before:transition-all before:duration-[0.3s] before:z-[-1] before:rounded-[10rem] before:left-0 before:bottom-0 hover:text-white hover:before:w-full mx-2"
+            className="text-black font-bold uppercase transition-all duration-[0.3s] relative overflow-hidden z-[1] px-5 py-3 rounded-[10rem] after:content-[''] after:absolute after:w-full after:h-full after:bg-[#0075FF] after:z-[-2] after:rounded-[10rem] after:left-0 after:bottom-0 before:content-[''] before:absolute before:w-[0%] before:h-full before:bg-[#08a] before:transition-all before:duration-[0.3s] before:z-[-1] before:rounded-[10rem] before:left-0 before:bottom-0 hover:text-white hover:before:w-full mx-2"
             onClick={handleSubmit}
           >
             NEXT
@@ -588,7 +589,7 @@ useEffect(() => {
       </div>
 
       <div className="flex ml-[12%]">
-        <div className="max-w-2xl mx-4 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto m-16 shadow-xl rounded-lg border-[#0075FF]h-[49vh] w-[26vw] ">
+        <div className="max-w-2xl mx-4 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto m-16 shadow-xl rounded-lg border-[#0075FF]h-[49vh] w-[max-content]">
           <div className="flex">
             <div className="h-14 overflow-hidden m-4 mr-2 w-[50%]">
               <div className="text-center border border-[#0075FF] rounded-lg">
@@ -604,18 +605,14 @@ useEffect(() => {
             </div>
           </div>
           <div className="h-12 overflow-hidden mr-4 ml-4 flex border border-[#0075FF] rounded-lg">
-            <div className="w-[73%] m-2 text-center">
-              Current Streak
-            </div>
+            <div className="w-[73%] m-2 text-center">Current Streak</div>
             <div className="w-[20%] mr-2 mt-2 mb-2 text-center">
               {/* {myData.streak} */}
               <Battery streak={myData.streak} />
             </div>
           </div>
           <div className="h-12 overflow-hidden mr-4 ml-4 flex mt-4 border border-[#0075FF] rounded-lg">
-            <div className="w-[67%] m-2 text-center ">
-              Marking Scheme
-            </div>
+            <div className="w-[67%] m-2 text-center ">Marking Scheme</div>
             {myData.scheme && (
               <>
                 <div className="w-[12%] mr-2 mt-2 mb-2 text-center">
@@ -633,40 +630,45 @@ useEffect(() => {
               disabled={!fetchLifeline?.available?.skip}
               className={`flex items-center justify-center rounded-lg h-10 mt-2 w-[100%] text-center overflow-hidden ${
                 !fetchLifeline?.available?.skip
-                ? "border border-red-400 text-gray-400 cursor-not-allowed"
-                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
+                  ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                  : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
-              onClick={() =>{
-                openModal({ type: "skip", lifelineIns: "The Skip Lifeline grants the player the option to bypass the current question without providing an answer.Upon activation, the current question will be substituted with a new one" })
-              }
-                
-              }
+              onClick={() => {
+                openModal({
+                  type: "skip",
+                  lifelineIns:
+                    "The Skip Lifeline grants the player the option to bypass the current question without providing an answer.Upon activation, the current question will be substituted with a new one",
+                });
+              }}
             >
               Skip Question
             </button>
-            
+
             {/* {console.log("audypoll" ,fetchLifeline?.available?.audience)}
             {console.log("audypollin_use" ,fetchLifeline?.in_use?.audience)} */}
 
-              <button
-              disabled={!fetchLifeline?.available?.audience ^ fetchLifeline?.in_use?.audience }
+            <button
+              disabled={
+                !fetchLifeline?.available?.audience ^
+                fetchLifeline?.in_use?.audience
+              }
               className={`flex items-center justify-center rounded-lg h-10 mt-2 w-full text-center overflow-hidden ${
-                !fetchLifeline?.available?.audience ^ fetchLifeline?.in_use?.audience
-                ? "border border-red-400 text-gray-400 cursor-not-allowed"
-                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
+                !fetchLifeline?.available?.audience ^
+                fetchLifeline?.in_use?.audience
+                  ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                  : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
               onClick={() =>
                 openModal({
                   type: "audiencePoll",
-                  lifelineIns: "The Audience Poll lifeline allows players to seek assistance from the collective wisdom of the audience. Upon activation, players receive a graphical representation of most probable option",
+                  lifelineIns:
+                    "The Audience Poll lifeline allows players to seek assistance from the collective wisdom of the audience. Upon activation, players receive a graphical representation of most probable option",
                 })
               }
             >
-               {/* <img src="./polling.png" className="w-[20%] h-6"/> */}
+              {/* <img src="./polling.png" className="w-[20%] h-6"/> */}
               Audience Poll
             </button>
-          
-            
 
             {/* <button
               disabled={!fetchLifeline?.available?.gpt ^fetchLifeline?.in_use?.gpt }
@@ -684,17 +686,26 @@ useEffect(() => {
             </button> */}
 
             <button
-              disabled={!fetchLifeline?.available?.streak ^fetchLifeline?.in_use?.streak }
+              disabled={
+                !fetchLifeline?.available?.streak ^
+                fetchLifeline?.in_use?.streak
+              }
               className={`flex items-center justify-center rounded-lg h-10 mt-2 w-[100%] text-center overflow-hidden ${
-                !fetchLifeline?.available?.streak ^fetchLifeline?.in_use?.streak
-                ? "border border-red-400 text-gray-400 cursor-not-allowed"
-                : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
+                !fetchLifeline?.available?.streak ^
+                fetchLifeline?.in_use?.streak
+                  ? "border border-red-400 text-gray-400 cursor-not-allowed"
+                  : "text-white border border-[#0075FF] bg-[#0075FF] bg-opacity-20"
               }`}
-              onClick={() =>
-                // { fetchLifeline.in_use.streak ? handleStreakLifeline():
-                openModal({ type: "streak", lifelineIns: "The Streak Lifeline awards players who achieve a consecutive streak of four correct answers by revealing a Caesar Cipher codeword for the subsequent question. Answer is obtained in encoded form" })
-              // }
-            }
+              onClick={
+                () =>
+                  // { fetchLifeline.in_use.streak ? handleStreakLifeline():
+                  openModal({
+                    type: "streak",
+                    lifelineIns:
+                      "The Streak Lifeline awards players who achieve a consecutive streak of four correct answers by revealing a Caesar Cipher codeword for the subsequent question. Answer is obtained in encoded form",
+                  })
+                // }
+              }
             >
               Streak Lifeline
             </button>
@@ -703,17 +714,15 @@ useEffect(() => {
           {/* {handleStreak && showStreakLifelinedata && <div className="text-white h-auto m-10">Encode the data!<p>{streakLifelineData.Encoded_data.encoded_data}</p><p>{streakLifelineData.Encoded_data.from_to}</p></div>} */}
           {showGPTModal && (
             <GPT_Modal
-              
               onClose={closeGPTModal}
               inputValue={dataGPT}
               onChange={gptData}
               onConfirm={handleGPT}
               response={botResponse}
               question={myData.question_data.question_md}
-              in_use = {fetchLifeline?.in_use?.gpt}
+              in_use={fetchLifeline?.in_use?.gpt}
             />
           )}
-    
 
           {handleStreak && showStreakLifelinedata && showStreakModal && (
             <Streak_Modal
@@ -731,7 +740,7 @@ useEffect(() => {
           )} */}
         </div>
       </div>
-      
+
       {showModal && (
         <Modal
           lifelineIns={modalData.lifelineIns}
@@ -742,11 +751,10 @@ useEffect(() => {
           onStreakLifeline={handleStreakLifeline}
           onAudiencePoll={handleAudiencePoll}
           audiencePollData={audiencePollData}
-          in_use_audience = {fetchLifeline?.in_use?.audience}
-          in_use_gpt = {fetchLifeline?.in_use?.gpt}
-          in_use_streak = {fetchLifeline?.in_use?.streak}
+          in_use_audience={fetchLifeline?.in_use?.audience}
+          in_use_gpt={fetchLifeline?.in_use?.gpt}
+          in_use_streak={fetchLifeline?.in_use?.streak}
           available={fetchLifeline?.in_use}
-          
         />
       )}
     </>

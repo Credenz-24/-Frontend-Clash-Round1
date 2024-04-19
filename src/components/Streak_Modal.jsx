@@ -1,9 +1,6 @@
 import React from "react";
 
 export default function Streak_Modal({
-  onClose,
-  data1,
-  data2,
 }) {
 
   return (
