@@ -39,10 +39,11 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: rgb(101, 137, 255);
+  
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #070235;
+  background: rgb(77, 77, 77);
 }

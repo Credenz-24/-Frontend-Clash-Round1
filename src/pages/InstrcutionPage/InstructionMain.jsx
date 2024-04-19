@@ -73,7 +73,7 @@ const InstructionMain = (props) => {
     const InstructionArray=[
         {
             num:1,
-            desc:"A 28 minute round of MCQs for individuals as well as a team(max 2 people) contenders  based on coding concepts in C/C++, Java and python, divided into Juniors and Seniors category. Juniors including F.E's and S.E's, seniors including T.E's and B.E's  where you would also be provided with 3 boonful lifelines(description will be provided in the game itself)"
+            desc:"A 28 minute round of MCQs for individuals as well as a team(max 2 people) contenders  based on coding concepts in C/C++, Java and python, divided into Juniors and Seniors category. Juniors including F.E's and S.E's, seniors including T.E's and B.E's  where you would also be provided with 3 boonful lifelines(description will be provided in the game itself) All Questions are Compulsory!"
         },
         {
             num:2,
@@ -85,7 +85,7 @@ const InstructionMain = (props) => {
         },
         {
             num:4,
-            desc:"You are not allowed to switch tabs or close the browser during the game. If you do so, you will be logged out automatically. Multiple Device Logins from same account are strictly prohibited."
+            desc:"You are not allowed to switch tabs or close the browser during the game. If you do so, the test will be submitted automatically. Multiple Device Logins from same account are strictly prohibited."
         },
         
 

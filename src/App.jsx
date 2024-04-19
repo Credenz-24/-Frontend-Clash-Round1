@@ -66,10 +66,10 @@ function App() {
     
     <>
         
-      <div className='main h-auto md:h-screen'>
+      <div className='main h-auto min-h-[100vh]'>
       <Navbar fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>
     {/* <DisableNavigation> */}
-    {/* <DisableClipboard> */}
+    <DisableClipboard>
    <Routes>
    <Route path="/" element={<Login fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>} />
       <Route path="instruction" element={<InstructionMain />} />
@@ -85,7 +85,7 @@ function App() {
 
       
       </Routes>
-      {/* </DisableClipboard> */}
+      </DisableClipboard>
       {/* </DisableNavigation> */}
       </div>
 

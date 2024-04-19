@@ -50,93 +50,98 @@ export default function Questions() {
   //Tab_Switching
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
-  const handleEvent = async (eventType) => {
-    // try {
-    //     const token = localStorage.getItem("token");
-    //     const response = await axios.post(
-    //         apiUrl,
-    //         {
-    //             bool: eventType === "tabSwitch" || eventType === "splitScreen",
-    //         },
-    //         {
-    //             headers: {
-    //                 Authorization: `${token}`,
-    //             },
-    //         }
-    //     );
-    //     if (response.status === 200) {
-    //         const { message, count } = response.data;
-    //         // console.log("API response:", message, count);
-    //         setTabSwitchCount(count);
-    //         if (count > 3) {
-    //             navigate("/result");
-    //             toast.error(
-    //                 "Your test has been auto-submitted due to excessive tab switching."
-    //             );
-    //         } else if (count > 0) {
-    //             toast.warning(
-    //                 `Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`
-    //             );
-    //         }
-    //     } else if (response.status === 307) {
-    //         const { message } = response.data;
-    //         if (message === "time over") {
-    //             toast.error("Time is over. Your test has been submitted.");
-    //         } else if (message === "submitted") {
-    //             toast.error(
-    //                 "Your test has been auto-submitted due to excessive tab switching."
-    //             );
-    //         }
-    //     }
-    // } catch (error) {
-    //     // console.error("Error handling event:", error);
-    //     navigate("/result");
-    //     toast.error("An error occurred. Please try again.");
-    // }
+// Debounce function to delay execution of handleEvent
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+          func(...args);
+      }, delay);
   };
+};
 
-  // Function to handle resize events and detect split-screen
-  const handleResize = () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+// Debounced handleEvent function
+const debouncedHandleEvent = debounce((eventType) => {
+  handleEvent(eventType);
+}, 300); // Adjust the delay (in milliseconds) as needed
 
-    // Define your criteria for considering the window to be split-screened
-    const isSplitScreen =
-      width < screen.width / 2 || height < screen.height / 2;
+const handleEvent = async (eventType) => {
+  try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+          apiUrl,
+          {
+              bool: eventType === "tabSwitch" || eventType === "splitScreen",
+          },
+          {
+              headers: {
+                  Authorization: `${token}`,
+              },
+          }
+      );
 
-    if (isSplitScreen) {
-      handleEvent("splitScreen");
-    }
-  };
+      if (response.status === 200) {
+          const { message, count } = response.data;
+          console.log("API response:", message, count);
+          setTabSwitchCount(count);
 
-  useEffect(() => {
-    // Handle fullscreen and visibility change events
-    const handleFullscreenChange = () => {
-      if (!document.fullscreenElement) {
-        handleEvent("fullscreenExit");
+          if (count > 3) {
+              navigate("/result");
+              toast.error(
+                  "Your test has been auto-submitted due to excessive tab switching."
+              );
+          } else if (count > 0) {
+              toast.warning(
+                  `Warning: You have switched tabs ${count} times. Switching again may cause your test to be auto-submitted.`
+              );
+          }
+      } else if (response.status === 307) {
+          const { message } = response.data;
+
+          if (message === "time over") {
+              toast.error("Time is over. Your test has been submitted.");
+          } else if (message === "submitted") {
+              toast.error(
+                  "Your test has been auto-submitted due to excessive tab switching."
+              );
+          }
       }
-    };
+  } catch (error) {
+      console.error("Error handling event:", error);
+      navigate("/result");
+      toast.error("An error occurred. Please try again.");
+  }
+};
 
-    const handleVisibilityChange = () => {
+const handleResize = () => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const isSplitScreen = width < screen.width / 2 || height < screen.height / 2;
+
+  if (isSplitScreen) {
+      debouncedHandleEvent("splitScreen");
+  }
+};
+
+useEffect(() => {
+  const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        handleEvent("tabSwitch");
+          debouncedHandleEvent("tabSwitch");
       }
-    };
+  };
 
-    // Add event listeners for fullscreen and visibility change
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  window.addEventListener("resize", handleResize);
+  window.addEventListener("blur", () => debouncedHandleEvent("tabSwitch"));
 
-    // Add resize event listener for split-screen detection
-    window.addEventListener("resize", handleResize);
-
-    // Clean up event listeners when component unmounts
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+      window.removeEventListener("blur", () => debouncedHandleEvent("tabSwitch"));
+  };
+}, []);
 
   const handleOptionSelect = (option) => {
     setSelectedOption((prevOption) => (prevOption === option ? "" : option));
@@ -484,8 +489,8 @@ export default function Questions() {
 
   return (
     <>
-      <div className="mt-2">
-        <div className="text-white bg-green- flex flex-row justify-between relative">
+      <div className="mt-2 w-[60%]">
+        <div className="text-white bg-green- flex flex-row justify-between relative w-[80%] mx-auto">
           <span className="border border-[#0075FF] rounded-lg p-4 mb-2 font-bold text-lg">
             Q {myData.question_level + 1}
           </span>
@@ -495,16 +500,16 @@ export default function Questions() {
         </div>
 
         {myData.question_data && (
-          <div className="h-[40vh] w-[100%] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
-            <div className="text-xl font-bold overflow-y-auto text-slate-100 w-full scrollbar-thin scrollbar-webkit">
+          <div className="h-[40vh] md:w-[720px] md:max-w-[740] mx-auto w-[100%] flex border border-[#0075FF] rounded-xl p-4 bg-opacity-10">
+            <div className="text-xl font-bold overflow-y-auto overflow-x-scroll text-slate-100 w-full ">
               <span className="font-bold text-xl"></span>
               <pre
-                className=""
+                className="max-w-[650px]"
                 style={{
                   whiteSpace: "pre-wrap",
-                  scrollbarColor: "gray black",
-                  WebkitScrollbar: { width: "10px", backgroundColor: "black" },
-                  scrollbarWidth: "thin",
+                //   scrollbarColor: "gray black",
+                //   WebkitScrollbar: { width: "10px", backgroundColor: "black" },
+                //   scrollbarWidth: "thin",
                 }}
               >
                 {myData.question_data.question_md}
@@ -512,7 +517,7 @@ export default function Questions() {
             </div>
           </div>
         )}
-        <div className="md:grid md:grid-cols-2 md:grid-rows-2 flex flex-col mx-auto w-[90%] gap-4 mt-10 md:w-[50vw] ">
+        <div className="md:grid md:grid-cols-2 md:grid-rows-2 flex flex-col mx-auto w-[90%] gap-4 mt-10 md:w-50v] ">
           {myData.question_data && (
             <>
               <button
@@ -588,19 +593,19 @@ export default function Questions() {
         </div>
       </div>
 
-      <div className="flex ml-[12%]">
-        <div className="max-w-2xl mx-4 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto m-16 shadow-xl rounded-lg border-[#0075FF]h-[49vh] w-[max-content]">
+      <div className="flex md:w-[40%] w-auto">
+        <div className="w-[100%] mx-4 text-white sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto m-16 shadow-xl rounded-lg border-[#0075FF]h-[49vh]">
           <div className="flex">
-            <div className="h-14 overflow-hidden m-4 mr-2 w-[50%]">
-              <div className="text-center border border-[#0075FF] rounded-lg">
+            <div className="h-16 overflow-hidden m-4 mr-2 w-[50%]">
+              <div className="text-center border border-[#0075FF] rounded-lg text-cyan-400">
                 Score
-                <div>{myData.score}</div>
+                <div className="py-1 border-t-2 border-sky-900">{myData.score}</div>
               </div>
             </div>
-            <div className="h-14 overflow-hidden m-4 ml-2 w-[50%] rounded-lg">
-              <div className="text-center border border-[#0075FF] rounded-lg ">
+            <div className="h-16 overflow-hidden m-4 ml-2 w-[50%] rounded-lg">
+              <div className="text-center border border-[#0075FF] rounded-lg text-cyan-400">
                 Username
-                <div>{myData.username}</div>
+                <div className="py-1 border-t-2 border-sky-900">{myData.username}</div>
               </div>
             </div>
           </div>

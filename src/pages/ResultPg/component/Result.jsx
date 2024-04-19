@@ -189,11 +189,16 @@ const Home = () => {
 
       <div className="main h-[auto] overflow-y-scroll w-full flex flex-col justify-center items-center ">
         <div className="container flex flex-wrap items-center justify-center h-[100%] w-full gap-16">
+          <div className="flex flex-col text-center"> 
+        <h1 className="text-white text-2xl font-bold m-4">RESULT</h1>
           <div className="leftbox w-72 h-[auto] rounded-3xl flex flex-col justify-between items-center z-[100] backdrop-blur-[20px] border-2 border-blue-500 px-[10px] py-[40px]">
+            
+            
             <div className="left-top h-[50%] flex flex-col justify-center items-center space-[10px] bg-red-90 w-full">
               <div className="profile h-[20vh] w-[20vh] rounded-full bg-red-600">
                 <img src="../diver.png" alt="" />
 
+              </div>
               </div>
               <div className="name h-[12vh] w-full bg-purple-70 flex flex-col justify-center items-center">
                 <h1 className="names text-[26px] text-white font-semibold">
