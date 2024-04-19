@@ -32,6 +32,7 @@ function Navbar({fullScreenToggle,setFullScreenToggle}) {
         localStorage.clear();
         setFullScreenToggle(true);
         navigate('/');
+        window.location.reload();
         toast.info("Logged Out!")
       })
       .catch((err) =>
@@ -117,21 +118,29 @@ function Navbar({fullScreenToggle,setFullScreenToggle}) {
           <h1 className="text-[30px] font-bold px-[19px] mt-[25.1px] "><img className='w-20 h-20' src="../clash.svg" alt="" /></h1>
         </div>  
         <div className="flex flex-col justify-start items-start w-full gap-[40px] py-[25px] uppercase ">
+        {localStorage.getItem('token') &&
           <a href="/" className="p-4 border-b border-zinc-700 w-full">
             Home
           </a>
+        }
           <a href="/leaderboard" className="p-4 border-b border-zinc-700 w-full">
             Leaderboards
           </a>
           <a onClick={handleInstructionsClick} className="p-4 border-b border-zinc-700 w-full">
             Instructions
           </a>
-          <a
-            onClick={() => handleLogout()}
-            className="p-4 border-b border-zinc-700 w-full"
-          >
-            Logout
-          </a>
+          {localStorage.getItem('token') ? (
+              <a
+              onClick={() => handleLogout()}
+              className="px-[20px] py-[10px] text-center cursor-pointer"
+            >
+              Logout
+            </a>
+    ) : (
+      <Link to="/" className="px-[20px] py-[10px] text-center">
+      Login
+    </Link>
+    )}
         </div>
       </div>
     </div>

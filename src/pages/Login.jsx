@@ -232,14 +232,14 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
     </style>
     <div ref={rootElementRef}
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
-    className="contar h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
+    className=" h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
     style={{backgroundImage: `url('../Background 2.jpeg')`, backgroundSize: 'cover'}}    
    >
       <div className="image h-full w-[50%] bg-blue-40 flex flex-col  justify-center items-center">
         
         <img src="../Credenz_logo.png" alt=""  className="credenz h-[60px] w-[60px] absolute top-[4%] left-[3%]" />
         <h1 className="name text-[20px] text-white font-bold absolute top-[6.3%] left-[6.7%]">Credenz</h1>
-        <img src="../clash.svg" alt=""  className="clash h-80 w-80" />
+        <img src="../clash.svg" alt=""  className="clash h-80 w-80 hidden md:block " />
 
 
         
