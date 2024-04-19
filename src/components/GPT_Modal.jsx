@@ -9,7 +9,7 @@ export default function GPT_Modal({
   onConfirm,
   inputValue,
   onChange,
-  // response,
+  response,
   question,
   in_use
 }) {
@@ -20,17 +20,20 @@ export default function GPT_Modal({
 
   useEffect(() => {
     setPrompt(question);
+    handleGptMessageGet();
   } , [question]);
 
   useEffect(() => {
     console.log("usef", promptResponse)
     //handleGptMessage();
-    if (promptResponse !== '') {
-      setPromptResponse(promptResponse);
+    if (response !== '') {
+      setPromptResponse(response);
       setIsAnswerReceived(true); // Set to true if a response is received
       setIsButtonDisabled(true); // Disable the button when a response is received
     }
   }, [promptResponse]);
+
+  // {isButtonDisabled === false? {handleGptMessageGet} : {} };
 
   const handleGptMessage = (e) => {
     const loadingToastId = toast.loading("Please Wait!");
@@ -47,6 +50,43 @@ export default function GPT_Modal({
         }
       )
       .then((response) => {
+        console.log("errstatus", response.data.status);
+        console.log("GPT");
+        setPromptResponse(response.data.bot_message);
+        setIsAnswerReceived(true); // Set to true when a response is received
+        toast.dismiss(loadingToastId);
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response && error.response.status === 400) {
+          // setIsError(true);
+          //setGptSelected(true);
+          //setShowGPTModal(true);
+        } else {
+          // setIsError(true);
+          console.error("Error fetching question:", error);
+        }
+        toast.dismiss(loadingToastId);
+      })
+      .finally(() => {
+        setIsButtonDisabled(true); // Keep the button disabled
+      });
+  };
+  const handleGptMessageGet = (e) => {
+    const loadingToastId = toast.loading("Please Wait!");
+    setIsButtonDisabled(true); // Disable the button when clicked
+    e.preventDefault();
+    axios
+      .get(
+        "https://api.clash.credenz.in/core/gpt/",
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("res" , response);
         console.log("errstatus", response.data.status);
         console.log("GPT");
         setPromptResponse(response.data.bot_message);

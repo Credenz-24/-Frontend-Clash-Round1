@@ -93,7 +93,7 @@ function Leaderboard() {
 
 
 
-    console.log("Here :",juniorLeaderboard);
+    // console.log("Here :",juniorLeaderboard);
 
     return (
       <>

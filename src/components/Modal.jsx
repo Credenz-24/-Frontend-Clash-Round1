@@ -13,7 +13,7 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
 
     switch (type) {
       case "GPT":
-        console.log("helllllo")
+        // console.log("helllllo")
         if (available.streak){
           setIfAnyLifelineActivte(true);
           onGPT();
@@ -27,13 +27,13 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
         
         break;
         case "skip":
-          console.log("helllllo")
+          // console.log("helllllo")
           setActivated(false);
             // onGPT();
           
           break;
         case "streak":
-            console.log("helllllo")
+            // console.log("helllllo")
             if (available.streak){
               setIfAnyLifelineActivte(true);
               onStreakLifeline();
@@ -47,7 +47,7 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
             
             break;
       default:
-        console.error("just checking");
+        // console.error("just checking");
     }
 
   },[])
@@ -55,7 +55,7 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
 
   
   const handleConfirm = () => {
-    console.log("lifeline crnt type",type)
+    // console.log("lifeline crnt type",type)
     // console.log()
     switch (type) {
       case "skip":
@@ -63,7 +63,7 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
         break;
 
       case "GPT":
-        console.log("helllllo gpt active")
+        // console.log("helllllo gpt active")
           onGPT();
         break;
 
@@ -77,7 +77,7 @@ export default function Modal({ lifelineIns, type, onClose, onSkipQuestion, onGP
         return;
 
       default:
-        console.error("Invalid lifeline type");
+        // console.error("Invalid lifeline type");
     }
     onClose();
   };

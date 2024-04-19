@@ -7,7 +7,7 @@ const Home = () => {
   const [per, setPer] = useState([]);
   const [isError, setIsError] = useState("");
 
-
+  
   const getMyPostData =async()=>{
     try {
       axios
@@ -16,7 +16,7 @@ const Home = () => {
         })
         .then((response) => {
           setPer(response.data)
-          console.log("result", response.data)
+          // console.log("result", response.data)
         })
         .catch((error) => {
           console.error("Error", error);
@@ -36,7 +36,7 @@ const Home = () => {
   // NOTE:  calling the function
   useEffect(() => {
     getMyPostData();
-    console.log(per);
+    // console.log(per);
   }, []);
 
   return (
@@ -205,20 +205,20 @@ const Home = () => {
               </div>
             </div>
           <div className="left-mid-stats h-[40%] w-full bg-green-80 flex flex-col justify-evenly items-center">
-                <div className="text w-[100%] h-[40%] justify-start items-center flex flex-row  gap-10 ">
+                <div className="text w-[100%] h-[40%] justify-start items-center flex flex-row  gap-10 align-middle">
                   <h3>Total Questions</h3>
-                  <div className=" rounded-lg h-[50px] w-[95px] bg-blue-500 font-semibold text-[18px]"></div>
+                  <div className="flex rounded-lg h-[50px] w-[95px] bg-blue-500 font-semibold text-[18px] items-center justify-center">{per?.total_questions}</div>
                 </div>
                 <div className="text w-[100%] h-[40%] flex flex-row justify-start items-center gap-5">
                   <h3>Correct Questions</h3>
-                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px]"></div>
+                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px] align-middle">{per?.correct_questions}</div>
                 </div>
           </div>
 
             <div className="left-bottom h-[10%] flex flex-col justify-center items-center gap-[20px] bg-purple-60  w-full">
-              <button className="bg-blue-500 text-[20px] hover:bg-blue-800 text-white py-2 px-4 rounded-full">
+              {/* <button className="bg-blue-500 text-[20px] hover:bg-blue-800 text-white py-2 px-4 rounded-full">
                 Feedback
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="rightbox  flex flex-col w-[100vh] h-[80vh] rounded-[30px] backdrop-blur-[20px] border-2 border-blue-500  justify-center items-start z-[100]">
@@ -271,14 +271,16 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className=" stats w-[40vh] h-[25vh] flex flex-col items-center justify-center gap-6 text-lg text-white">
-                <div className="w-[40vh] h-[20vh] justify-start items-center flex flex-row  gap-7">
+              <div className=" stats w-[40vh] h-[25vh] flex flex-col items-center justify-center gap-6 text-lg text-white align-middle">
+                <div className="w-[40vh] h-[20vh] justify-start items-center flex flex-row gap-7">
                   <h3>Total Questions</h3>
-                  <div className=" rounded-lg h-[50px] w-[95px] bg-blue-500 font-semibold text-[18px]">{per?.total_questions}</div>
+                  <div className="flex rounded-lg h-[50px] w-[95px] bg-blue-500 font-semibold text-[18px] items-center justify-center">
+                      {per?.total_questions}
+                  </div>
                 </div>
-                <div className="w-[40vh] h-[20vh] flex flex-row justify-start items-center gap-1">
+                <div className="w-[40vh] h-[20vh] justify-start items-center flex flex-row gap-1">
                   <h3>Correct Questions</h3>
-                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px]">{per?.correct_questions}</div>
+                  <div className="flex bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px] items-center justify-center">{per?.correct_questions}</div>
                 </div>
               </div>
             </div>

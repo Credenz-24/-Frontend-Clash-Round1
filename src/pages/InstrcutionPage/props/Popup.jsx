@@ -11,7 +11,7 @@ const Popup = (props) => {
     const Text = props.pop;
     const ID = props.idx;
 
-    console.log(Text);
+    // console.log(Text);
 
     
 

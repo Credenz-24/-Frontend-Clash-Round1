@@ -41,7 +41,7 @@ const LifeLine = (props) => {
 
     let Display = (text) => { 
         const newDisplay = LifelineArray.filter(items => items.id === text);
-        console.log(newDisplay);
+        // console.log(newDisplay);
         setText(newDisplay);
       }
 

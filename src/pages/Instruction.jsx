@@ -58,10 +58,10 @@ const Instruction = () => {
 
   const handleProceedClick = () => {
     if (acceptedConditions) {
-      console.log("Proceeding...");
+      // console.log("Proceeding...");
       navigate("/Question")
     } else {
-      console.log("Please accept the conditions.");
+      // console.log("Please accept the conditions.");
     }
   };
 

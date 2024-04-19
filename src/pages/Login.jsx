@@ -35,7 +35,7 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
         } else if (element.msRequestFullscreen) { // Edge
           element.msRequestFullscreen();
         } else {
-          console.error("Fullscreen API not supported by this browser.");
+          // console.error("Fullscreen API not supported by this browser.");
         }
       }
     }
@@ -83,7 +83,7 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
     else{
       setIsTeam(false);
     }
-    console.log(event.target.value)
+    // console.log(event.target.value)
   };
 
   // const handleLogin = (event) => {
@@ -114,25 +114,26 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
   };
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log({ userId, password });
+    // console.log({ userId, password });
   
     const loginData = {
       username: userId,
       password: password,
       is_team: isTeam,
     };
-    console.log("lgn" , loginData);
+    // console.log("lgn" , loginData);
     // Display loading toast
     const loadingToastId = toast.loading("Logging in...");
   
     axios.post('https://api.clash.credenz.in/core/login/', loginData)
       .then((res) => {
-        console.log("res" , res);
-        console.log("token",res.data.token);
+        // console.log("res" , res);
+        // console.log("token",res.data.token);
         
   
         localStorage.setItem('token', res.data.token);
-        console.log(res.data.jwt);
+        localStorage.setItem("isLogin" , true);
+        // console.log(res.data.jwt);
         if(res.data.token){
           setFullScreenToggle(false);
           enterFullScreen();
@@ -145,10 +146,10 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
           return;
         }
         const jwt = localStorage.getItem('token');
-        console.log(jwt); // Log the retrieved JWT
+        // console.log(jwt); // Log the retrieved JWT
         enterFullScreen();
 
-        console.log("mssg" , res.data.message);
+        // console.log("mssg" , res.data.message);
 
         
   
@@ -159,7 +160,7 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
         setUser(loginData);
       })
       .catch((err) => {
-        console.log("errror",err.response);
+        // console.log("errror",err.response);
         // Dismiss loading toast if login fails
         toast.dismiss(loadingToastId);
         toast.error(err.response.data.message);
@@ -231,42 +232,35 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
     </style>
     <div ref={rootElementRef}
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
-    className="h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
+    className="container h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
     style={{backgroundImage: `url('../Background 2.jpeg')`, backgroundSize: 'cover'}}    
-    // onClick={createRipple}
-    >
-      {/* <video
-        autoPlay
-        loop
-        muted
-        className="h-full w-full object-cover fixed top-0 left-0 z-[-1]"
-      >
-        <source src="../wave3.mp4" type="video/mp4" />
-      </video> */}
-      
+   >
       <div className="image h-full w-[50%] bg-blue-40 flex flex-col  justify-center items-center">
         
-        <img src="../Credenz_logo.png" alt=""  className="h-[60px] w-[60px] absolute top-[4%] left-[3%]" />
-        <h1 className="text-[20px] text-white font-bold absolute top-[6.3%] left-[6.7%]">Credenz</h1>
-        <img src="../clash.svg" alt=""  className="h-80 w-80" />
+        <img src="../Credenz_logo.png" alt=""  className="credenz h-[60px] w-[60px] absolute top-[4%] left-[3%]" />
+        <h1 className="name text-[20px] text-white font-bold absolute top-[6.3%] left-[6.7%]">Credenz</h1>
+        <img src="../clash.svg" alt=""  className="clash h-80 w-80" />
 
 
         
       </div>
-      <div className="md:w-[50%] h-screen bg-red-40 flex justify-center items-center sm:ml-12 md:ml-12 lg:ml-0">
+      <div className="right-box md:w-[50%] h-screen bg-red-40 flex justify-center items-center sm:ml-12 md:ml-12 lg:ml-0">
       
  
       
     
 
-      <div className="mt-0 sm:mt-6 bg-red-40 md:mt-5 lg:mt-5 xl:mt-0 2xl:mt-0 md:w-[60%] sm:bottom-10 sm:flex sm:place-items-center sm:items-center justify-center sm:ml-12 md:ml-12 lg:ml-0 bg-re-200 ">
+      <div className="login-box mt-0 sm:mt-6 bg-red-40 md:mt-5 lg:mt-5 xl:mt-0 2xl:mt-0 md:w-[60%] sm:bottom-10 sm:flex sm:place-items-center sm:items-center justify-center sm:ml-12 md:ml-12 lg:ml-0 bg-re-200 ">
         {/* <EvervaultCard text="hover" handleLogin = {handleLogin}/> */}
         
         <form
           onSubmit={handleLogin}
           className=" h-[500px] w-full  xl:mb- sm:mt-6 md:mt-20 lg:mt-20 xl:mt-20 2xl:mt-0 flex z-10 md:w-[370px] sm:w-[340px] flex-col justify-center items-center p-[0px] bg-opacity-0 rounded-[20px] bg-clip-padding backdrop-filter backdrop-blur-[30px] border border-zinc-600 gradient-shadow"
         >
-        <div className="h-[100%] w-full px-[px] flex flex-col justify-center items-center gap-[40px] ">
+          <div className="logo ">
+        <img src="../clash.png" alt=""  className="clash-logo h-80 w-80" />
+        </div>
+        <div className="h-screen w-full px-[px] flex flex-col justify-center items-center gap-[40px] ">
           <h1 className="text-white justify-center text-center items-center text-[40px] font-semibold">
             Login
           </h1>
@@ -352,7 +346,8 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
                 </label>
               </div>
             </div>
-            <div className=" h-[15%] w-full flex justify-center items-center">            
+            
+            <div className="login-btn h-[15%] w-full flex justify-center items-center">            
               <button
                 
                 onClick={handleLogin}

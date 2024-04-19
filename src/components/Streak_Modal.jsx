@@ -21,7 +21,7 @@ export default function Streak_Modal({
               </button>
             </div>
             <div
-              className="text-white relative p-6 flex-auto h-[49vh] w-[20vw] max-h-[50vh] border-2 border-white m-6 resize-none overflow-y-scroll bg-slate-800"
+              className="text-white relative p-6 flex-auto h-[35vh] w-[20vw] max-h-[50vh] border-2 border-white m-6 resize-none overflow-y-scroll bg-slate-800"
               style={{
                 scrollbarColor: "gray black",
                 WebkitScrollbar: {
@@ -32,7 +32,7 @@ export default function Streak_Modal({
               }}
             >
               <div>
-                <p>Encode the data!</p>
+                <p>Encode the data!,</p>
               </div>
               <div>
                 <p>{data1}</p>

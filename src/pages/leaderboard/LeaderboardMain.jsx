@@ -24,10 +24,10 @@ function Leaderboard() {
 
     const handleProceedClick = () => {
         if (acceptedConditions) {
-          console.log("Proceeding...");
+        //   console.log("Proceeding...");
           navigate("/question")
         } else {
-          console.log("Please accept the conditions.");
+        //   console.log("Please accept the conditions.");
         }
       };
 
@@ -42,7 +42,7 @@ function Leaderboard() {
                 setJuniorLeaderboard(junior_list);
                 setSeniorLeaderboard(senior_list);
             } catch (error) {
-                console.error("Error fetching leaderboard data:", error);
+                // console.error("Error fetching leaderboard data:", error);
                 // Handle error scenarios (e.g., showing an error message)
             }
         };
@@ -52,7 +52,7 @@ function Leaderboard() {
 
 
 
-    console.log("Here :",juniorLeaderboard);
+    // console.log("Here :",juniorLeaderboard);
 
     return (
       <>

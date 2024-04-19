@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Route, createBrowserRouter, createRoutesFromElements, Routes } from 'react-router-dom';
+import { Route, createBrowserRouter, createRoutesFromElements, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Instruction from './pages/Instruction';
 import QuestionMcq from './pages/QuestionMcq';
@@ -26,13 +26,21 @@ import DisableNavigation from './components/DisableNavigation';
 // )
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [IsAccepted, setIsAccepted] = useState(false);
   useEffect(() => {
+    const userIsLoggedIn = localStorage.getItem('isLogin') === 'true';
+    const contractAccept = localStorage.getItem('contractAccept') === 'true';
+    // console.log("cecking ",userIsLoggedIn);
+
+    setLoggedIn(userIsLoggedIn);
+    setIsAccepted(contractAccept);
     const handleKeyDown = (event) => {
       // Prevent opening the console with keyboard shortcuts
-      // if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c') || (event.keyCode === 123) || event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
-      //   event.preventDefault();
-      //   event.stopPropagation();
-      // }
+      if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c') || (event.keyCode === 123) || event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
     };
 
     // Add event listener to intercept keyboard events
@@ -57,11 +65,11 @@ function App() {
       <div className='main h-screen'>
       <Navbar fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>
     {/* <DisableNavigation> */}
-    {/* <DisableClipboard> */}
+    <DisableClipboard>
    <Routes>
    <Route path="/" element={<Login fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>} />
       <Route path="instruction" element={<InstructionMain />} />
-      <Route path="leaderboard" element={<LeaderboardMain/>} />
+      {/* <Route path="leaderboard" element={<LeaderboardMain/>} /> */}
       <Route element={<PrivateRoute />} >
         <Route path="question" element={<QuestionMcq/>} />
         <Route path="result" element={<Result/>} />
@@ -73,7 +81,7 @@ function App() {
 
       
       </Routes>
-      {/* </DisableClipboard> */}
+      </DisableClipboard>
       {/* </DisableNavigation> */}
       </div>
 

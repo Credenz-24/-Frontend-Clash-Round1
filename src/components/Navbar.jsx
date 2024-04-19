@@ -24,9 +24,9 @@ function Navbar({fullScreenToggle,setFullScreenToggle}) {
         headers: { Authorization: `${localStorage.getItem('token')}` }
       })
       .then((res) => {
-        console.log('logout', res);
+        // console.log('logout', res);
         setUser(null);
-        localStorage.removeItem('token');
+        localStorage.clear();
         setFullScreenToggle(true);
         navigate('/');
         toast.info("Logged Out!")
@@ -60,23 +60,23 @@ function Navbar({fullScreenToggle,setFullScreenToggle}) {
       <div className="nav-right text-[17px] font-normal justify-center items-center gap-[20px] hidden md:flex">
       {isHomeRoute ? (
         <>
-        <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
+        {/* <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
           Leaderboards
-        </Link>
+        </Link> */}
         </>
       ) : (
       <>
-      {isInstructionRoute && isQuestionRoute ? (null):(
+      {isInstructionRoute ? (null):(
         <button onClick={handleInstructionsClick} className="px-[20px] py-[10px] text-center">
           Instructions
         </button>
       )
     }
-    {isQuestionRoute ? (null):(
+    {/* {localStorage.getItem('token')  ? (null):(
         <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
           Leaderboards
         </Link>
-    )}
+    )} */}
     {/* {console.log(localStorage.getItem('token') !== undefined)} */}
     {localStorage.getItem('token') ? (
               <a

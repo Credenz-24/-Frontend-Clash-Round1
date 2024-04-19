@@ -23,12 +23,6 @@ const InstructionMain = (props) => {
             content:"The Streak Lifeline awards players who achieve a consecutive streak of four correct answers by revealing a Caesar Cipher codeword for the subsequent question. Answer is obtained in encoded form"
         },
         {
-            id:2,
-            title:"AI HELPER",
-            img:"../technology.png",
-            content:"The AI Helper lifeline empowers players to utilize artificial intelligence to procure answers. By activating this lifeline, players gain access to an AI-driven tool for obtaining response"
-        },
-        {
             id:3,
             title:"POLL",
             img:"../polling.png",
@@ -46,6 +40,7 @@ const InstructionMain = (props) => {
     const handleProceedClick = () => {
         if (acceptedConditions) {
             const loadingToastId =  toast.loading("Proceeding...");
+            localStorage.setItem("contractAccept" , true);
           navigate("/question")
           toast.dismiss(loadingToastId);
         } else {
@@ -90,7 +85,7 @@ const InstructionMain = (props) => {
 
     let display = (text) => { 
         const newDisplay = LifelineArray.filter(items => items.id === text);
-        console.log("NEW DISPLAY: ",newDisplay);
+        // console.log("NEW DISPLAY: ",newDisplay);
         setText(newDisplay);
       }
 

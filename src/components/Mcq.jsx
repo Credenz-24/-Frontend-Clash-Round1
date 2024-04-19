@@ -44,6 +44,7 @@ export default function Questions() {
   const [min, setMin] = useState(0);
 
   const navigate = useNavigate();
+
   const apiUrl = 'https://api.clash.credenz.in/core/tab_switch/';
 
   //Tab_Switching 
@@ -65,7 +66,7 @@ export default function Questions() {
         );
         if (response.status === 200) {
             const { message, count } = response.data;
-            console.log("API response:", message, count);
+            // console.log("API response:", message, count);
             setTabSwitchCount(count);
             if (count > 3) {
                 navigate("/result");
@@ -88,7 +89,7 @@ export default function Questions() {
             }
         }
     } catch (error) {
-        console.error("Error handling event:", error);
+        // console.error("Error handling event:", error);
         navigate("/result");
         toast.error("An error occurred. Please try again.");
     }
@@ -169,12 +170,12 @@ useEffect(() => {
       });
       //console.log(token);
       setTimer(response.data.time_remaining);
-      console.log("timer",response.data.time_remaining);
+      // console.log("timer",response.data.time_remaining);
     } catch (error) {
       if (error.response && error.response.status === 307) {
          //navigate('/result');
       } else {
-        console.error("Error fetching timer value:", error);
+        // console.error("Error fetching timer value:", error);
       }
     }
   };
@@ -222,10 +223,10 @@ useEffect(() => {
       
       setFetchLifeline(response.data);
       setIsError(false);
-      console.log("All lifelines",response.data);
+      // console.log("All lifelines",response.data);
     } catch (error) {
       setIsError(true);
-      console.error("Error fetching lifeline:", error);
+      // console.error("Error fetching lifeline:", error);
     }
   };
   // console.log("123",localStorage.getItem("token"));
@@ -243,10 +244,10 @@ useEffect(() => {
       setIsError(false);
       setTimer(response.data.time_remaining);
       setdataGPT("");
-      console.log("res fetch question: ", response.data);
+      // console.log("res fetch question: ", response.data);
     } catch (error) {
       setIsError(true);
-      console.error("Error fetching question:", error);
+      // console.error("Error fetching question:", error);
     }
   };
 
@@ -276,13 +277,13 @@ useEffect(() => {
 
       })
       .catch((error) => {
-        console.log("res handlesubmit:", error.response.status,typeof(error.response.status));
+        // console.log("res handlesubmit:", error.response.status,typeof(error.response.status));
         if(error.response.status === 307 || error.response.status === 500){
           // toast.dismiss(loadingToastId);
           navigate('/result');
           toast.info("Round Ended!")
         }
-        console.error("Error submitting option:", error);
+        // console.error("Error submitting option:", error);
         toast.error(error);
       });
   };
@@ -296,8 +297,8 @@ useEffect(() => {
           headers: { Authorization:`${localStorage.getItem("token")}` },
         })
         .then((response) => {
-          console.log("Question skipped successfully");
-          console.log(response.data);
+          // console.log("Question skipped successfully");
+          // console.log(response.data);
           setMyData(response.data);
           toast.success("Question skipped successfully");
           fetchQuestion();
@@ -310,11 +311,11 @@ useEffect(() => {
           setFetchLifeline((prevState) => ({ ...prevState, skip: false }));
         })
         .catch((error) => {
-          console.error("Error skipping question:", error);
+          // console.error("Error skipping question:", error);
           toast.dismiss(loadingToastId);
         });
     } catch (error) {
-      console.error("Error skipping question:", error);
+      // console.error("Error skipping question:", error);
       toast.dismiss(loadingToastId);
     }
   };
@@ -324,8 +325,8 @@ useEffect(() => {
     setShowGPTModal(true);
     setdataGPT(myData.question_data.question_md);
 
-    console.log("shmdl" , showModal);
-    console.log(fetchLifeline.in_use.gpt,"Lifeline msg")
+    // console.log("shmdl" , showModal);
+    // console.log(fetchLifeline.in_use.gpt,"Lifeline msg")
  
     if(fetchLifeline?.in_use.gpt){
       console.log("Using gpt")
@@ -338,11 +339,11 @@ useEffect(() => {
           }
         )
         .then((response) => {
-          console.log("errstatus",response);
-          console.log("GPT");
+          // console.log("errstatus",response);
+          // console.log("GPT");
           setFetchLifeline((prevState) => ({ ...prevState, gpt: false }));
           setGptSelected(false);
-          console.log(response.data);
+          // console.log(response.data);
           //setBotResponse(response.data.bot_message);
           // setShowModal(false);
           toast.dismiss();
@@ -351,14 +352,14 @@ useEffect(() => {
           setGptSelected(true);
         })
         .catch((error) => {
-          console.log("gpt ",error.response.status)
+          // console.log("gpt ",error.response.status)
           if (error.response && error.response.status === 400) {
             setIsError(true);
             //setGptSelected(true);
             setShowGPTModal(true);
           } else {
             setIsError(true);
-            console.error("Error fetching question:", error);
+            // console.error("Error fetching question:", error);
           }
           toast.dismiss();
         });
@@ -415,8 +416,8 @@ useEffect(() => {
           headers: { Authorization: `${localStorage.getItem("token")}` },
         })
         .then((response) => {
-          console.log("Streak");
-          console.log(response.data);
+          // console.log("Streak");
+          // console.log(response.data);
           setHandleStreak(true);
           setStreakLifelineData(response.data);
           toast.dismiss();
@@ -427,11 +428,11 @@ useEffect(() => {
           setFetchLifeline((prevState) => ({ ...prevState, streak: false }));
         })
         .catch((error) => {
-          console.error("Error streak lifeline", error);
+          // console.error("Error streak lifeline", error);
           toast.dismiss();
         });
     } catch (error) {
-      console.error("Error streak lifeline", error);
+      // console.error("Error streak lifeline", error);
       toast.dismiss();
     }
   };
@@ -446,8 +447,8 @@ useEffect(() => {
           headers: { Authorization: ` ${localStorage.getItem("token")}` },
         })
         .then((response) => {
-          console.log("Audience");
-          console.log(response.data);
+          // console.log("Audience");
+          // console.log(response.data);
           setAudiencePollData(response.data.correct_answer_percentages);
           setAudiencePollVisible(true);
           toast.dismiss();
@@ -456,11 +457,11 @@ useEffect(() => {
           fetchLifelines();
         })
         .catch((error) => {
-          console.error("Error skipping question:", error);
+          // console.error("Error skipping question:", error);
           toast.dismiss();
         });
     } catch (error) {
-      console.error("Error skipping question:", error);
+      // console.error("Error skipping question:", error);
       toast.dismiss();
     }
   };
@@ -489,7 +490,7 @@ useEffect(() => {
     <>
       <div className="mt-2">
       <div className="text-white bg-green- flex flex-row justify-between relative">
-  <span className="border border-[#0075FF] rounded-lg p-4 mb-2 font-bold text-lg">Q {myData.question_level}</span>
+  <span className="border border-[#0075FF] rounded-lg p-4 mb-2 font-bold text-lg">Q {myData.question_level+1}</span>
   <span className="border border-[#0075FF] rounded-lg p-4 mb-2">Timer: {formatTime(timer)} minutes</span>
 </div>
 
@@ -667,7 +668,7 @@ useEffect(() => {
           
             
 
-            <button
+            {/* <button
               disabled={!fetchLifeline?.available?.gpt ^fetchLifeline?.in_use?.gpt }
               className={`flex items-center justify-center rounded-lg h-10 mt-2 w-[100%] text-center overflow-hidden ${
                 !fetchLifeline?.available?.gpt ^fetchLifeline?.in_use?.gpt
@@ -680,7 +681,7 @@ useEffect(() => {
                  openModal({ type: "GPT", lifelineIns: "The AI Helper lifeline empowers players to utilize artificial intelligence to procure answers. By activating this lifeline, players gain access to an AI-driven tool for obtaining response" })}}
           >
               AI Helper
-            </button>
+            </button> */}
 
             <button
               disabled={!fetchLifeline?.available?.streak ^fetchLifeline?.in_use?.streak }
@@ -707,7 +708,7 @@ useEffect(() => {
               inputValue={dataGPT}
               onChange={gptData}
               onConfirm={handleGPT}
-              // response={botResponse}
+              response={botResponse}
               question={myData.question_data.question_md}
               in_use = {fetchLifeline?.in_use?.gpt}
             />
