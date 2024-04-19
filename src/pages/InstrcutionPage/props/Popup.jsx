@@ -11,16 +11,42 @@ const Popup = (props) => {
     const Text = props.pop;
     const ID = props.idx;
 
-    // console.log(Text);
+    console.log(Text);
 
     
 
     return ( 
         <>
+
+<style>
+            {`
+                 @media only screen and (max-width: 468px) {
+                    .popup{
+                        top:10%;
+                        height:500px;
+                    }
+                    .image{
+                        height:100%;
+                        width:100%;
+                    }
+                    .icon{
+                        height:100px;
+                        width:100px;
+                    }
+   
+                } 
+                @media only screen and (min-width: 500px) {
+                    .cards2{
+                        display:none;
+                    }
+                }
+
+            `}
+        </style>
             {Text.map((text) => (
                 <div className="popup absolute top-[10%] h-[400px] w-[350px] bg-[#0b143e] rounded-[10px] flex flex-col justify-center items-center backdrop-blur-[10px]">
                     <div className="image h-[50%] w-full bg-[#3a6eff] rounded-[10px] flex justify-center items-center">
-                        <img src={text.img} alt="" className="h-[150px] w-[150px]" />
+                        <img src={text.img} alt="" className=" icon h-[150px] w-[150px]" />
                     </div>
                     <div className="title h-[auto] w-full bg-transparent flex justify-center items-start">
                         <h1 className="text-white text-[30px]">{text.title}</h1>

@@ -37,20 +37,24 @@ function App() {
     setIsAccepted(contractAccept);
     const handleKeyDown = (event) => {
       // Prevent opening the console with keyboard shortcuts
-      if (event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c') || (event.keyCode === 123) || event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
+      if ((event.ctrlKey && event.shiftKey && (event.key === 'C' || event.key === 'c' || event.key === 'I' || event.key === 'i' || event.key === 'J' || event.key === 'j')) ||
+        (event.keyCode === 123) ||  // F12 - Chrome developer tools
+        (event.altKey && event.key === 'Tab') ||  // Alt+Tab window switcher
+        (event.metaKey && (event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'ArrowUp' || event.key === 'ArrowDown'))  // Windows+Arrow keys for window management
+       ) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
 
-    // Add event listener to intercept keyboard events
-    document.addEventListener('keydown', handleKeyDown);
+  // Add event listener to intercept keyboard events
+  document.addEventListener('keydown', handleKeyDown);
 
-    // Clean up the event listener on unmount
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+  // Clean up the event listener on unmount
+  return () => {
+    document.removeEventListener('keydown', handleKeyDown);
+  };
+}, []);   
   
   // let path = router;
   const {currentUser}  = useContext(UserContext);
@@ -65,11 +69,11 @@ function App() {
       <div className='main h-screen'>
       <Navbar fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>
     {/* <DisableNavigation> */}
-    <DisableClipboard>
+    {/* <DisableClipboard> */}
    <Routes>
    <Route path="/" element={<Login fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>} />
       <Route path="instruction" element={<InstructionMain />} />
-      {/* <Route path="leaderboard" element={<LeaderboardMain/>} /> */}
+      <Route path="leaderboard" element={<LeaderboardMain/>} />
       <Route element={<PrivateRoute />} >
         <Route path="question" element={<QuestionMcq/>} />
         <Route path="result" element={<Result/>} />
@@ -81,7 +85,7 @@ function App() {
 
       
       </Routes>
-      </DisableClipboard>
+      {/* </DisableClipboard> */}
       {/* </DisableNavigation> */}
       </div>
 

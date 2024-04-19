@@ -232,7 +232,7 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
     </style>
     <div ref={rootElementRef}
     // className="h-screen items-center flex md:flex-row sm:flex-col text-center flex-col bg-black"
-    className="container h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
+    className="contar h-[100vh] w-full flex md:flex-row sm:flex-col justify-center items-center flex-col bg-transparent"
     style={{backgroundImage: `url('../Background 2.jpeg')`, backgroundSize: 'cover'}}    
    >
       <div className="image h-full w-[50%] bg-blue-40 flex flex-col  justify-center items-center">
