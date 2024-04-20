@@ -66,7 +66,7 @@ const Senior = ({leadSenior}) => {
                 {
                     leadSenior.filter((items, index) => (index < 3))
                         .map((item) => (
-                            <TopCards key={item.username} name={item.username} teamScore={item.team_score}  />
+                            <TopCards key={item.teammate_one} name={item.teammate_one} teamScore={item.team_score}  />
                         ))
                 }
                 </div>
@@ -83,7 +83,7 @@ const Senior = ({leadSenior}) => {
                         {currentEntries.map((entry, index) => (
                             <li key={index} className="flex justify-between items-center h-[78px] w-[100%] p-4 hover:bg-[#0b143e] hover:text-zinc-800">
                                 <span className="font-semibold text-blue-400">{(currentPage - 1)*entriesPerPage + index + 1}</span>
-                                <span className="text-white font-medium">{entry.username}</span>
+                                <span className="text-white font-medium">{entry.teammate_one}</span>
                                 {/* Adjust according to your data structure */}
                                 <span className="text-gray-200">{entry.team_score} pts</span>
                                 <span className="text-sm text-gray-300">{entry.correct_questions} Ques</span>
