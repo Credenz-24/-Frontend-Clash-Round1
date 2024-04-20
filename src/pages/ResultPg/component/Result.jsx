@@ -236,7 +236,7 @@ const Home = () => {
                 />
 
                 <div className="in flex flex-col h-[10vh] w-[30vh] rounded-[15px] bg-[#053884]  justify-center items-center">
-                  <h1 className="text-white text-[28px] font-semibold ">{per?.overall_score}</h1>
+                  <h1 className="text-white text-[28px] font-semibold ">{per?.team_score}</h1>
                   <h1 className="text-white opacity-[90%] text-[15px] font-semibold ">
                     Score
                   </h1>

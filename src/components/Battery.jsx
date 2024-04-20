@@ -47,7 +47,7 @@ export default function Battery({streak}) {
                         readingText: {
                           lightContrastColor: '#111',
                           darkContrastColor: streak>=4? '#fff' :'black',
-                          lowBatteryColor: 'red',
+                          lowBatteryColor: 'white',
                           fontFamily: 'Helvetica',
                           fontSize: 15,
                           showPercentage: false, // Hide percentage
