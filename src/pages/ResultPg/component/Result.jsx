@@ -216,7 +216,7 @@ const Home = () => {
                 </div>
                 <div className="text w-[100%] h-[40%] flex flex-row justify-start items-center gap-5">
                   <h3>Correct Questions</h3>
-                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px] align-middle">{per?.correct_questions}</div>
+                  <div className="bg-blue-500 rounded-lg h-[50px] w-[95px] font-semibold text-[18px] align-middle"> {per?.correct_questions}</div>
                 </div>
           </div>
 
@@ -259,7 +259,7 @@ const Home = () => {
               <div className=" accuracy flex flex-col h-full w-[40%] justify-center items-center gap-2 ">
                 <div className="circle flex flex-row justify-around item-center  gap-10">
                 <div style={{ width: 155, height: 155 }}>
-                <CircularProgressbar value={(per?.user_accuracy)} text={`${(per?.user_accuracy)}%`} strokeWidth={12} 
+                <CircularProgressbar value={(per?.user_accuracy)} text={`${(per?.user_accuracy === undefined ? 0 : per?.user_accuracy)}%`} strokeWidth={12} 
                     styles={buildStyles({
                         pathColor: `#3B82F6`,
                         textColor: '#fff',

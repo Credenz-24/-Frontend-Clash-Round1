@@ -32,7 +32,8 @@ const Junior = ({leadJunior}) => {
                     </div>
                 </div> */}
                 <div className="juniors-table h-[70%] w-full flex justify-center items-center bg-green-40 ">
-                    <div className=" junior h-[300px] w-[700px] mx-auto bg-red-80 shadow-md rounded-lg overflow-y-scroll no-scrollbar border-[2px] border-solid border-blue-500">
+                    <div className=" junior h-[300px] w-[700px] mx-auto bg-red-80 shadow-md rounded-lg overflow-y-scroll border-[2px] border-solid border-blue-500 [&::-webkit-scrollbar]:[width:6px]" 
+                        >
                     <h2 className="text-2xl sticky top-0 font-bold text-center text-white bg-[#09112c] p-4 border-b-[2px] border-solid border-blue-500">Junior Leaderboard</h2>
                     <ul className="divide-y divide-blue-900">
                         {currentEntries.map((entry, index) => (
@@ -41,7 +42,7 @@ const Junior = ({leadJunior}) => {
                                 <span className="text-white font-medium">{entry.username}</span>
                                 {/* Adjust according to your data structure */}
                                 <span className="text-gray-200">{entry.team_score} pts</span>
-                                <span className="text-sm text-gray-300">Q{entry.correct_questions}</span>
+                                <span className="text-sm text-gray-300">{entry.correct_questions} Ques</span>
                             </li>
                         ))}
                         <div className="ml-10 flex justify-center mt-4">

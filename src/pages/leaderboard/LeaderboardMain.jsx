@@ -3,12 +3,15 @@ import axios from 'axios';
 import TopCards from './props/TopCards';
 import Junior from './leads/Junior';
 import Senior from './leads/Senior';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function Leaderboard() {
     // Initialize state for both junior and senior lists
     const [juniorLeaderboard, setJuniorLeaderboard] = useState([]);
     const [seniorLeaderboard, setSeniorLeaderboard] = useState([]);
     const [acceptedConditions, setAcceptedConditions] = useState(false);
+    const navigate = useNavigate();
 
 
     const [per, setPer] = useState([]);
@@ -29,6 +32,29 @@ function Leaderboard() {
         } else {
         //   console.log("Please accept the conditions.");
         }
+      };
+    const handleLogout = () => {
+        axios
+          .get('https://api.clash.credenz.in/core/logout/', {
+            headers: { Authorization: `${localStorage.getItem('token')}` }
+          })
+          .then((res) => {
+            // console.log('logout', res);
+            setUser(null);
+            localStorage.clear();
+            setFullScreenToggle(true);
+            navigate('/');
+            window.location.reload();
+            toast.info("Logged Out!")
+          })
+          .catch((err) =>
+            {console.log(err.response ? err.response.data.detail : err.message);
+            localStorage.clear();
+            navigate("/");
+            toast.info("Logged Out!")
+          }
+    
+          );
       };
 
     useEffect(() => {
@@ -110,7 +136,7 @@ function Leaderboard() {
                 }
             `}
         </style>
-        <div className="costainer md:h-[86.4vh] h-[max-content]  w-full bg-red-60 flex flex-col justify-center items-center overflow-y-hidden">
+        <div className="costainer md:h-[86.4vh] h-[max-content]  w-full bg-red-60 flex flex-col justify-center items-center overflow-y-hidden sm:text-sm">
             {(currentStep=== 0) ? (
                 <>
                     <Junior leadJunior={juniorLeaderboard}/>
@@ -130,9 +156,11 @@ function Leaderboard() {
                         <button className="btnPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 " onClick={handlePrev}>
                             JUNIORS
                         </button>
-                       <button className="btPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800 ">
+                        {localStorage.getItem('token') &&                        
+                        <button className="btPrev text-white px-[20px] py-[10px] bg-blue-500 rounded-full hover:bg-blue-800" onClick={handleLogout}>
                             Proceed
-                        </button>
+                        </button> }
+
                     </div>
                 
                 </>

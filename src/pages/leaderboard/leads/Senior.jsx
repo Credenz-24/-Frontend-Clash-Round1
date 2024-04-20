@@ -86,7 +86,7 @@ const Senior = ({leadSenior}) => {
                                 <span className="text-white font-medium">{entry.username}</span>
                                 {/* Adjust according to your data structure */}
                                 <span className="text-gray-200">{entry.team_score} pts</span>
-                                <span className="text-sm text-gray-300">Q{entry.correct_questions}</span>
+                                <span className="text-sm text-gray-300">{entry.correct_questions} Ques</span>
                             </li>
                         ))}
 

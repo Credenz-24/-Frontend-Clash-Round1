@@ -4,5 +4,5 @@ import UserContext from '../../context/UserContext'
 
 export default function PrivateRoute() {
     const token = localStorage.getItem('token');
-  return token ? <Outlet /> : <Navigate to='/' />;
+  return token ? <Outlet /> : <Navigate to='/instruction' />;
 }

@@ -15,6 +15,7 @@ import UserContext from '../context/UserContext';
 import { useContext , useState,useEffect } from 'react';
 import DisableClipboard from './components/DisableClipboard'
 import DisableNavigation from './components/DisableNavigation';
+import NoPrivateRoute from './components/NoPrivateRoute';
 
 
 
@@ -31,7 +32,7 @@ function App() {
   useEffect(() => {
     const userIsLoggedIn = localStorage.getItem('isLogin') === 'true';
     const contractAccept = localStorage.getItem('contractAccept') === 'true';
-    // console.log("cecking ",userIsLoggedIn);
+    // console.log("cecking ",userIsLoggedIn);6
 
     setLoggedIn(userIsLoggedIn);
     setIsAccepted(contractAccept);
@@ -71,7 +72,9 @@ function App() {
     {/* <DisableNavigation> */}
     <DisableClipboard>
    <Routes>
+   {/* <Route element={<NoPrivateRoute />} > */}
    <Route path="/" element={<Login fullScreenToggle={fullScreenToggle} setFullScreenToggle={setFullScreenToggle}/>} />
+   {/* </Route> */}
       <Route path="instruction" element={<InstructionMain />} />
       <Route path="leaderboard" element={<LeaderboardMain/>} />
       <Route element={<PrivateRoute />} >

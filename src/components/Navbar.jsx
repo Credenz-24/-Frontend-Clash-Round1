@@ -75,17 +75,23 @@ function Navbar({fullScreenToggle,setFullScreenToggle}) {
         </>
       ) : (
       <>
-      {isInstructionRoute ? (null):(
+      {isInstructionRoute || isResultRoute ? (null):(
         <button onClick={handleInstructionsClick} className="px-[20px] py-[10px] text-center">
           Instructions
         </button>
       )
     }
-    {/* {localStorage.getItem('token')  ? (null):(
+    {localStorage.getItem('token')  ? (null):(
         <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
           Leaderboards
         </Link>
-    )} */}
+    )}
+    {isResultRoute ? (
+              <Link to="/leaderboard" className="px-[20px] py-[10px] text-center">
+              Leaderboards
+            </Link>
+    ):(null)
+  }
     {/* {console.log(localStorage.getItem('token') !== undefined)} */}
     {localStorage.getItem('token') ? (
               <a

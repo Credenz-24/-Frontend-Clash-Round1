@@ -141,7 +141,7 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
         }
         else{
           navigate("/");
-          toast.info(res.data.message);
+          toast.info(res.data.message); 
           toast.dismiss(loadingToastId);
           return;
         }
@@ -160,10 +160,10 @@ const Login = ({fullScreenToggle,setFullScreenToggle}) => {
         setUser(loginData);
       })
       .catch((err) => {
-        // console.log("errror",err.response);
+        console.log("errror",err);
         // Dismiss loading toast if login fails
         toast.dismiss(loadingToastId);
-        toast.error(err.response.data.message);
+        toast.error(err.message);
       });
   };
 

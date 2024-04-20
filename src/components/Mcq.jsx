@@ -371,7 +371,7 @@ useEffect(() => {
 
     //   axios
     //     .post(
-    //       "http://127.0.0.1:8000/core/gpt/",
+    //       "https://api.clash.credenz.in/core/gpt/",
     //       { message: dataGPT },
     //       {
     //         headers: {
@@ -508,7 +508,7 @@ useEffect(() => {
                 style={{
                   whiteSpace: "pre-wrap",
                 //   scrollbarColor: "gray black",
-                //   WebkitScrollbar: { width: "10px", backgroundColor: "black" },
+                //   WebkitScrollbar: { width: "1px", backgroundColor: "black" },
                 //   scrollbarWidth: "thin",
                 }}
               >
