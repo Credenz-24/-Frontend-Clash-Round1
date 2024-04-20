@@ -38,6 +38,7 @@ export default function Questions() {
   const [showGPTModal, setShowGPTModal] = useState(false); //Shows gpt modal
   const [showStreakModal, setShowStreakModal] = useState(false); //Shows streak lifeline modal
   const [timer, setTimer] = useState(0); //fetchtimer
+  const [nextbutton , setNextButton] = useState(true);
   // const [activeLifeline , setActiveLifeline] = useState(false);
   const [hrs, setHrs] = useState(0);
   const [sec, setSec] = useState(0);
@@ -243,6 +244,7 @@ useEffect(() => {
         }
       );
       setMyData(response.data);
+      setNextButton(false);
       //console.log("questions",response.data.question_data.question_md)
       setIsError(false);
       setTimer(response.data.time_remaining);
@@ -260,15 +262,16 @@ useEffect(() => {
       toast.error("Choose an Option!");
       return;
     }
+    setNextButton(true);
     const selectedOptionData = { selected: selectedOption };
 
-    // const loadingToastId = toast.loading("Loading Next Questions!");
+    const loadingToastId = toast.loading("Loading Next Questions!");
     axios
       .post("https://api.clash.credenz.in/core/submit/", selectedOptionData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
       .then((res) => {
-        // toast.dismiss(loadingToastId);
+        toast.dismiss(loadingToastId);
         fetchQuestion();
         fetchLifelines();
         setSelectedOption("");
@@ -281,7 +284,7 @@ useEffect(() => {
       .catch((error) => {
         // console.log("res handlesubmit:", error.response.status,typeof(error.response.status));
         if (error.response.status === 307 || error.response.status === 500) {
-          // toast.dismiss(loadingToastId);
+          toast.dismiss(loadingToastId);
           navigate("/result");
           toast.info("Round Ended!");
         }
@@ -586,6 +589,7 @@ useEffect(() => {
             //className="py-2.5 px-5 me-2 mb-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             className="text-black font-bold uppercase transition-all duration-[0.3s] relative overflow-hidden z-[1] px-5 py-3 rounded-[10rem] after:content-[''] after:absolute after:w-full after:h-full after:bg-[#0075FF] after:z-[-2] after:rounded-[10rem] after:left-0 after:bottom-0 before:content-[''] before:absolute before:w-[0%] before:h-full before:bg-[#08a] before:transition-all before:duration-[0.3s] before:z-[-1] before:rounded-[10rem] before:left-0 before:bottom-0 hover:text-white hover:before:w-full mx-2"
             onClick={handleSubmit}
+            disabled={nextbutton}
           >
             NEXT
           </button>

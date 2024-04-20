@@ -3,7 +3,7 @@ import TopCards from "../props/TopCards";
 const Senior = ({leadSenior}) => {
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [entriesPerPage] = useState(3)
+    const [entriesPerPage] = useState(7)
 
     const indexOfLastEntry = currentPage * entriesPerPage;
     const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
